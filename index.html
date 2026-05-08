@@ -34,6 +34,10 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .mode-card:hover{border-color:#2980b9;transform:translateY(-4px);box-shadow:0 8px 30px rgba(41,128,185,.2);}
 .mode-card h2{font-size:24px;color:#1a5276;margin-bottom:8px;}
 .mode-card p{font-size:14px;color:#888;}
+.mode-card.disabled{opacity:.4;cursor:not-allowed;pointer-events:none;}
+.consent-box{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid #d6eaf8;border-radius:12px;padding:16px 20px;cursor:pointer;max-width:500px;}
+.consent-box input[type=checkbox]{width:22px;height:22px;accent-color:#1a5276;cursor:pointer;flex-shrink:0;}
+.consent-box label{font-size:14px;color:#444;cursor:pointer;line-height:1.6;}
 .mode-card .mode-icon{font-size:48px;margin-bottom:16px;}
 
 /* ===== CUSTOMER SCREEN ===== */
@@ -234,13 +238,17 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
     <h1>放射熱量AI解析</h1>
     <p>測定モードを選択してください</p>
   </div>
+  <div class="consent-box" onclick="toggleConsent()">
+    <input type="checkbox" id="consent-chk">
+    <label for="consent-chk">本日は、検査診断および医療行為の目的でないことをご了承ください。</label>
+  </div>
   <div class="mode-cards">
-    <div class="mode-card" onclick="startMode(1)">
+    <div id="mode-card-1" class="mode-card disabled" onclick="startMode(1)">
       <div class="mode-icon">🧑</div>
       <h2>1人モード</h2>
       <p>お客様1名の測定を行います</p>
     </div>
-    <div class="mode-card" onclick="startMode(2)">
+    <div id="mode-card-2" class="mode-card disabled" onclick="startMode(2)">
       <div class="mode-icon">👥</div>
       <h2>2人同時モード</h2>
       <p>お客様2名の測定を同時に行います</p>
@@ -886,6 +894,11 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+  if (id === 'screen-main') {
+    document.getElementById('consent-chk').checked = false;
+    document.getElementById('mode-card-1').classList.add('disabled');
+    document.getElementById('mode-card-2').classList.add('disabled');
+  }
 }
 
 function goBack() {
@@ -899,6 +912,17 @@ function goBack() {
   };
   if (map[id]) showScreen(map[id]);
   else showScreen('screen-main');
+}
+
+// ============================================================
+// CONSENT
+// ============================================================
+function toggleConsent() {
+  const chk = document.getElementById('consent-chk');
+  chk.checked = !chk.checked;
+  const disabled = !chk.checked;
+  document.getElementById('mode-card-1').classList.toggle('disabled', disabled);
+  document.getElementById('mode-card-2').classList.toggle('disabled', disabled);
 }
 
 // ============================================================
