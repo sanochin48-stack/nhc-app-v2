@@ -842,15 +842,39 @@ function calculateAll(vals, withFoot) {
     balances[pair.left] = { ...bal, bPt, pairBScore, secondBal };
   }
 
-  if (!withFoot) {
-    // No-foot: max W = 40 (no foot parts), no B score for foot
+  if (!withFoot && !isSecond) {
+    // 足なし・初回（上限70点）
     const pureTotal = wScore + bScore;
-    const finalScore = Math.round(pureTotal / 40 * 70);
+    const finalScore = Math.min(70, Math.round(pureTotal / 40 * 70));
     const rank = getRank(finalScore);
     return { parts, balances, wScore, bScore, pureTotal, finalScore, rank, withFoot:false };
   }
 
-  // First visit or second
+  if (!withFoot && isSecond) {
+    // 足なし・2回目（上限70点、除数20）
+    const firstFinalScore = firstData ? firstData.totalScore : 50;
+    let improvP = 0;
+    for (const part of PART_ORDER) {
+      if (part === 'footR' || part === 'footL') continue;
+      const p = parts[part];
+      if (!p || !p.secondCNo) continue;
+      if (p.secondCNo === 3 || p.secondCNo === 5) improvP += 2;
+      else if (p.secondCNo === 4 || p.secondCNo === 6) improvP += 1;
+    }
+    let balImprovP = 0;
+    for (const pair of BALANCE_PAIRS) {
+      if (pair.left === 'footL') continue;
+      const b = balances[pair.left];
+      if (b && b.secondBal && b.secondBal.key === 'balanced_now') balImprovP += 2;
+    }
+    const totalImprovP = improvP + balImprovP;
+    const R = totalImprovP / 20;
+    const finalScore = Math.min(70, Math.round(firstFinalScore + (70 - firstFinalScore) * R));
+    const rank = getRank(finalScore);
+    return { parts, balances, wScore, bScore, pureTotal: wScore + bScore, improvP, balImprovP, R, finalScore, rank, withFoot:false, isSecond:true, firstFinalScore };
+  }
+
+  // 足あり・初回
   if (!isSecond) {
     const pureTotal = wScore + bScore;
     const correction = Math.floor((100 - pureTotal) * 0.15);
@@ -858,19 +882,17 @@ function calculateAll(vals, withFoot) {
     const rank = getRank(finalScore);
     return { parts, balances, wScore, bScore, pureTotal, correction, finalScore, rank, withFoot:true };
   } else {
-    // 2nd visit
+    // 足あり・2回目（上限100点、除数26）
     const firstFinalScore = firstData ? firstData.totalScore : 50;
     let improvP = 0;
     for (const part of PART_ORDER) {
-      if (!withFoot && (part === 'footR' || part === 'footL')) continue;
       const p = parts[part];
-      if (!p.secondCNo) continue;
+      if (!p || !p.secondCNo) continue;
       if (p.secondCNo === 3 || p.secondCNo === 5) improvP += 2;
       else if (p.secondCNo === 4 || p.secondCNo === 6) improvP += 1;
     }
     let balImprovP = 0;
     for (const pair of BALANCE_PAIRS) {
-      if (!withFoot && pair.left === 'footL') continue;
       const b = balances[pair.left];
       if (b && b.secondBal && b.secondBal.key === 'balanced_now') balImprovP += 2;
     }
