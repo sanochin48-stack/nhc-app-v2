@@ -23,6 +23,8 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .app-header{position:fixed;top:0;right:0;padding:12px 16px;z-index:200;display:flex;gap:8px;align-items:center;}
 .btn-settings{background:#fff;border:1px solid #ccc;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;color:#555;box-shadow:0 1px 4px rgba(0,0,0,.1);}
 .btn-settings:hover{background:#f5f5f5;}
+.btn-hearing{background:#fff;border:1px solid #1a5276;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;color:#1a5276;box-shadow:0 1px 4px rgba(0,0,0,.1);font-family:inherit;}
+.btn-hearing:hover{background:#ebf5fb;}
 
 /* ===== MAIN SCREEN ===== */
 #screen-main{align-items:center;justify-content:center;gap:40px;padding:40px 20px;}
@@ -229,6 +231,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 
 <!-- ===== SETTINGS BUTTON (FIXED) ===== -->
 <div class="app-header">
+  <button class="btn-hearing" onclick="window.location.href='https://sanochin48-stack.github.io/hearing-app/'">← ヒヤリングへ戻る</button>
   <button class="btn-settings" onclick="openSettings()">⚙ 設定</button>
 </div>
 
@@ -236,7 +239,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 <div id="screen-main" class="screen active">
   <div class="main-logo">
     <h1>放射熱量AI解析</h1>
-    <p>測定モードを選択してください</p>
+    <p>測定を開始してください</p>
   </div>
   <div class="consent-box" onclick="toggleConsent()">
     <input type="checkbox" id="consent-chk">
@@ -245,13 +248,8 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   <div class="mode-cards">
     <div id="mode-card-1" class="mode-card disabled" onclick="startMode(1)">
       <div class="mode-icon">🧑</div>
-      <h2>1人モード</h2>
-      <p>お客様1名の測定を行います</p>
-    </div>
-    <div id="mode-card-2" class="mode-card disabled" onclick="startMode(2)">
-      <div class="mode-icon">👥</div>
-      <h2>2人同時モード</h2>
-      <p>お客様2名の測定を同時に行います</p>
+      <h2>測定開始</h2>
+      <p>お客様の測定を行います</p>
     </div>
   </div>
 </div>
@@ -259,7 +257,6 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 <!-- ===== SCREEN: CUSTOMER INPUT ===== -->
 <div id="screen-customer" class="screen">
   <div class="customer-body">
-    <div id="dual-indicator" class="alert alert-warning" style="display:none;"></div>
     <div class="card">
       <div class="screen-title" id="customer-title">お客様情報</div>
       <div class="form-group">
@@ -897,7 +894,6 @@ function showScreen(id) {
   if (id === 'screen-main') {
     document.getElementById('consent-chk').checked = false;
     document.getElementById('mode-card-1').classList.add('disabled');
-    document.getElementById('mode-card-2').classList.add('disabled');
   }
 }
 
@@ -920,29 +916,16 @@ function goBack() {
 function toggleConsent() {
   const chk = document.getElementById('consent-chk');
   chk.checked = !chk.checked;
-  const disabled = !chk.checked;
-  document.getElementById('mode-card-1').classList.toggle('disabled', disabled);
-  document.getElementById('mode-card-2').classList.toggle('disabled', disabled);
+  document.getElementById('mode-card-1').classList.toggle('disabled', !chk.checked);
 }
 
 // ============================================================
 // MODE START
 // ============================================================
 function startMode(m) {
-  state.mode = m;
-  state.dualStep = 0;
-  state.dualResults = [];
+  state.mode = 1;
   state.saved = false;
-
-  if (m === 2) {
-    document.getElementById('dual-indicator').style.display = 'block';
-    document.getElementById('dual-indicator').textContent = '👥 2人同時モード：1人目の情報を入力してください';
-    document.getElementById('customer-title').textContent = '👤 1人目：お客様情報';
-  } else {
-    document.getElementById('dual-indicator').style.display = 'none';
-    document.getElementById('customer-title').textContent = 'お客様情報';
-  }
-
+  document.getElementById('customer-title').textContent = 'お客様情報';
   resetCustomerForm();
   showScreen('screen-customer');
 }
@@ -1220,15 +1203,15 @@ function buildBodyDiagram(result) {
   for (const k in RAW) DOTS[k] = [RAW[k][0] + DX, RAW[k][1] + DY];
 
   const configs = [
-    { key:'forehead', name:'おでこ', lx:325,  ly:52,  align:'right'  },
-    { key:'neckR',    name:'首 右',  lx:280,  ly:118, align:'right'  },
-    { key:'neckL',    name:'首 左',  lx:560,  ly:118, align:'left'   },
+    { key:'forehead', name:'おでこ', lx:325,  ly:30,  align:'right'  },
+    { key:'neckR',    name:'首 右',  lx:280,  ly:138, align:'right'  },
+    { key:'neckL',    name:'首 左',  lx:560,  ly:138, align:'left'   },
     { key:'handR',    name:'甲 右',  lx:140,  ly:326, align:'right'  },
     { key:'handL',    name:'甲 左',  lx:700,  ly:329, align:'left'   },
-    { key:'fingerR',  name:'指 右',  lx:140,  ly:420, align:'right'  },
-    { key:'fingerL',  name:'指 左',  lx:700,  ly:421, align:'left'   },
-    { key:'footR',    name:'足 右',  lx:270,  ly:648, align:'right'  },
-    { key:'footL',    name:'足 左',  lx:570,  ly:648, align:'left'   },
+    { key:'fingerR',  name:'指 右',  lx:140,  ly:400, align:'right'  },
+    { key:'fingerL',  name:'指 左',  lx:700,  ly:400, align:'left'   },
+    { key:'footR',    name:'足 右',  lx:340,  ly:648, align:'right'  },
+    { key:'footL',    name:'足 左',  lx:459,  ly:648, align:'left'   },
   ];
 
   const active = configs.filter(c => {
@@ -1508,29 +1491,10 @@ function startSecondVisit() {
   showScreen('screen-input');
 }
 
-function startSecondPerson() {
-  document.getElementById('dual-indicator').style.display = 'block';
-  document.getElementById('dual-indicator').textContent = '👥 2人同時モード：2人目の情報を入力してください';
-  document.getElementById('customer-title').textContent = '👤 2人目：お客様情報';
-  resetCustomerForm();
-  showScreen('screen-customer');
-}
-
-function showDualSummary() {
-  const r = state.dualResults;
-  document.getElementById('dual-summary').innerHTML = r.map((d, i) => `
-    <div style="padding:12px 0;border-bottom:1px solid #eee;">
-      <strong>${i+1}人目</strong>：${d.customerName || '（名前なし）'}<br>
-      <span style="font-size:24px;font-weight:bold;color:#1a5276;">${d.totalScore}点</span>
-      <span style="margin-left:8px;font-size:16px;">${d.rank}ランク</span>
-    </div>
-  `).join('');
-  openDialog('dialog-dual-done');
-}
 
 function startOver() {
   state = {
-    mode: 1, dualStep: 0, dualResults: [],
+    mode: 1,
     session: 1, customerName: '', withFoot: true,
     vals: {}, calcResult: null, firstMeasureId: null,
     firstMeasureData: null, prevScreen: null, saved: false,
@@ -1827,7 +1791,7 @@ init();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
   });
 }
 </script>
