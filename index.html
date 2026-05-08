@@ -251,12 +251,18 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
       <h2>測定開始</h2>
       <p>お客様の測定を行います</p>
     </div>
+    <div id="mode-card-2" class="mode-card disabled" onclick="startMode(2)">
+      <div class="mode-icon">👥</div>
+      <h2>2人同時モード</h2>
+      <p>お客様2名の測定を同時に行います</p>
+    </div>
   </div>
 </div>
 
 <!-- ===== SCREEN: CUSTOMER INPUT ===== -->
 <div id="screen-customer" class="screen">
   <div class="customer-body">
+    <div id="dual-indicator" class="alert alert-warning" style="display:none;"></div>
     <div class="card">
       <div class="screen-title" id="customer-title">お客様情報</div>
       <div class="form-group">
@@ -894,6 +900,7 @@ function showScreen(id) {
   if (id === 'screen-main') {
     document.getElementById('consent-chk').checked = false;
     document.getElementById('mode-card-1').classList.add('disabled');
+    document.getElementById('mode-card-2').classList.add('disabled');
   }
 }
 
@@ -916,16 +923,27 @@ function goBack() {
 function toggleConsent() {
   const chk = document.getElementById('consent-chk');
   chk.checked = !chk.checked;
-  document.getElementById('mode-card-1').classList.toggle('disabled', !chk.checked);
+  const disabled = !chk.checked;
+  document.getElementById('mode-card-1').classList.toggle('disabled', disabled);
+  document.getElementById('mode-card-2').classList.toggle('disabled', disabled);
 }
 
 // ============================================================
 // MODE START
 // ============================================================
 function startMode(m) {
-  state.mode = 1;
+  state.mode = m;
+  state.dualStep = 0;
+  state.dualResults = [];
   state.saved = false;
-  document.getElementById('customer-title').textContent = 'お客様情報';
+  if (m === 2) {
+    document.getElementById('dual-indicator').style.display = 'block';
+    document.getElementById('dual-indicator').textContent = '👥 2人同時モード：1人目の情報を入力してください';
+    document.getElementById('customer-title').textContent = '👤 1人目：お客様情報';
+  } else {
+    document.getElementById('dual-indicator').style.display = 'none';
+    document.getElementById('customer-title').textContent = 'お客様情報';
+  }
   resetCustomerForm();
   showScreen('screen-customer');
 }
@@ -1492,9 +1510,29 @@ function startSecondVisit() {
 }
 
 
+function startSecondPerson() {
+  document.getElementById('dual-indicator').style.display = 'block';
+  document.getElementById('dual-indicator').textContent = '👥 2人同時モード：2人目の情報を入力してください';
+  document.getElementById('customer-title').textContent = '👤 2人目：お客様情報';
+  resetCustomerForm();
+  showScreen('screen-customer');
+}
+
+function showDualSummary() {
+  const r = state.dualResults;
+  document.getElementById('dual-summary').innerHTML = r.map((d, i) => `
+    <div style="padding:12px 0;border-bottom:1px solid #eee;">
+      <strong>${i+1}人目</strong>：${d.customerName || '（名前なし）'}<br>
+      <span style="font-size:24px;font-weight:bold;color:#1a5276;">${d.totalScore}点</span>
+      <span style="margin-left:8px;font-size:16px;">${d.rank}ランク</span>
+    </div>
+  `).join('');
+  openDialog('dialog-dual-done');
+}
+
 function startOver() {
   state = {
-    mode: 1,
+    mode: 1, dualStep: 0, dualResults: [],
     session: 1, customerName: '', withFoot: true,
     vals: {}, calcResult: null, firstMeasureId: null,
     firstMeasureData: null, prevScreen: null, saved: false,
