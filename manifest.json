@@ -2,7 +2,7 @@
   "name": "放射熱量AI解析",
   "short_name": "熱量AI解析",
   "description": "体表面温度測定・スコア解析アプリ",
-  "start_url": "./taion_app.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#1a5276",
   "theme_color": "#1a5276",
