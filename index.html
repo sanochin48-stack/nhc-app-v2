@@ -226,37 +226,23 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   #screen-main,#screen-customer,#screen-input,#screen-settings{padding:70px 16px 20px;}
 }
 
-/* ===== INTRO SCREENS ===== */
-#screen-intro1{align-items:center;justify-content:center;background:#0a1628;position:relative;overflow:hidden;cursor:pointer;}
-#screen-intro1::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(64,180,255,.18) 0%,transparent 60%),repeating-linear-gradient(0deg,rgba(64,180,255,.04) 0,transparent 1px,transparent 50px),repeating-linear-gradient(90deg,rgba(64,180,255,.04) 0,transparent 1px,transparent 50px);}
-.intro1-title{font-size:44px;font-weight:bold;letter-spacing:4px;text-align:center;background:linear-gradient(90deg,#4fc3f7,#ffffff,#4fc3f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;position:relative;z-index:1;line-height:1.3;}
-.intro1-circle{position:absolute;width:260px;height:260px;border-radius:50%;border:2px solid rgba(100,200,255,.25);top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 60px rgba(64,180,255,.2);z-index:0;}
-.intro-tap-hint{position:absolute;bottom:36px;font-size:14px;color:rgba(255,255,255,.45);letter-spacing:2px;z-index:1;}
-.intro-next-btn{position:absolute;bottom:28px;right:28px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:24px;padding:10px 24px;font-size:15px;cursor:pointer;z-index:2;backdrop-filter:blur(4px);}
-
-#screen-intro2{align-items:center;justify-content:center;background:linear-gradient(160deg,#d4eeff 0%,#b0d8f5 50%,#d4eeff 100%);cursor:pointer;padding:40px 24px;gap:32px;}
-.intro2-text{font-size:26px;font-weight:bold;color:#1a3a5c;text-align:center;line-height:1.7;max-width:500px;}
-.intro2-text .blue{color:#0070d8;}
-.intro2-nav{display:flex;justify-content:space-between;align-items:center;position:absolute;bottom:24px;left:24px;right:24px;}
-
-#screen-intro3{background:#fff;padding:24px 24px 80px;overflow-y:auto;}
-.intro3-header{font-size:22px;font-weight:bold;color:#27ae60;margin-bottom:8px;}
-.intro3-supervisor{background:#f0f6ff;border:2px solid #a0b8d8;border-radius:12px;padding:16px 20px;margin-top:16px;font-size:13px;color:#333;line-height:1.7;max-width:320px;}
-.intro3-supervisor .sup-title{font-size:13px;color:#555;border-left:4px solid #2471a3;padding-left:8px;margin-bottom:8px;font-weight:600;}
-.intro3-supervisor .sup-name{font-size:17px;font-weight:bold;color:#1a3a5c;margin:6px 0;}
-.intro3-supervisor .sup-source{font-size:11px;color:#888;margin-top:4px;}
-.intro3-nav{display:flex;justify-content:space-between;position:fixed;bottom:0;left:0;right:0;padding:12px 24px;background:#fff;border-top:1px solid #eee;}
-
-#screen-intro4{align-items:center;justify-content:center;background:#fff;padding:40px 24px 100px;}
-.intro4-wrap{max-width:600px;width:100%;}
-.intro4-checkbox-row{display:flex;align-items:flex-start;gap:20px;margin-bottom:32px;cursor:pointer;}
-.intro4-chk{width:52px;height:52px;cursor:pointer;flex-shrink:0;accent-color:#1a5276;margin-top:4px;}
-.intro4-text{font-size:16px;line-height:1.9;color:#333;}
-.intro4-nav{position:fixed;bottom:0;left:0;right:0;padding:12px 24px;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-between;}
-.btn-agree{background:#1a5276;color:#fff;border:none;border-radius:12px;padding:14px 32px;font-size:17px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;}
-.btn-agree:disabled{background:#ccc;cursor:not-allowed;}
-
-/* ===== REDESIGNED SCREEN-MAIN (Slide 5) ===== */
+/* ===== INTRO SCREENS (image-based) ===== */
+.intro-slide{position:relative;background:#000;overflow:hidden;}
+.intro-slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.intro-slide-nav{position:absolute;bottom:0;left:0;right:0;padding:24px 32px;display:flex;justify-content:space-between;align-items:center;z-index:10;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 100%);}
+.intro-slide-nav.nav-center{justify-content:center;}
+.btn-intro-next{background:rgba(255,255,255,.92);color:#1a5276;border:none;border-radius:12px;padding:14px 40px;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;min-height:52px;transition:all .2s;}
+.btn-intro-next:hover{background:#fff;transform:translateY(-2px);}
+.btn-intro-back{background:rgba(0,0,0,.35);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:12px;padding:14px 28px;font-size:18px;cursor:pointer;font-family:inherit;min-height:52px;transition:all .2s;}
+.btn-intro-back:hover{background:rgba(0,0,0,.55);}
+.intro4-overlay{position:absolute;bottom:88px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.93);border-radius:16px;padding:24px 28px;width:min(540px,calc(100% - 48px));z-index:10;display:flex;flex-direction:column;gap:20px;backdrop-filter:blur(6px);}
+.intro4-chk-row{display:flex;align-items:flex-start;gap:16px;cursor:pointer;}
+.intro4-chk-row input[type=checkbox]{width:44px;height:44px;flex-shrink:0;accent-color:#1a5276;cursor:pointer;margin-top:2px;}
+.intro4-chk-row label{font-size:16px;line-height:1.8;color:#333;cursor:pointer;}
+.btn-start{display:none;background:#1a5276;color:#fff;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;min-height:56px;transition:all .2s;}
+.btn-start.visible{display:block;}
+.btn-start:hover{background:#2471a3;}
+/* ===== SCREEN-MAIN (モード選択) ===== */
 #screen-main{padding:60px 20px 40px;align-items:center;justify-content:flex-start;gap:20px;}
 .main-mode-area{width:100%;max-width:680px;display:flex;gap:16px;align-items:stretch;}
 .mode-card-hero{background:#fff;border-radius:20px;padding:44px 40px;text-align:center;cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,.1);border:3px solid transparent;transition:all .2s;flex:3;}
@@ -264,10 +250,24 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .mode-card-hero .mode-icon{font-size:56px;margin-bottom:14px;}
 .mode-card-hero h2{font-size:26px;color:#1a5276;}
 .mode-card-hero p{font-size:14px;color:#888;margin-top:6px;}
-.mode-card-mini{background:#f0f0f0;border-radius:16px;padding:20px 12px;text-align:center;flex:1;opacity:.5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.mode-card-mini{background:#f0f0f0;border-radius:16px;padding:20px 12px;text-align:center;flex:1;opacity:.5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;pointer-events:none;}
 .mode-card-mini .mode-icon-sm{font-size:28px;}
 .mode-card-mini span{font-size:11px;color:#666;line-height:1.4;}
-@media(max-width:480px){.main-mode-area{flex-direction:column;}.mode-card-mini{flex-direction:row;padding:12px 16px;}.mode-card-mini span{text-align:left;}}
+/* ===== MEDIA QUERIES ===== */
+@media(max-width:1023px){
+  .intro-slide-nav{padding:16px 20px;}
+  .btn-intro-next,.btn-intro-back{padding:12px 22px;font-size:16px;min-height:48px;}
+  .intro4-overlay{bottom:76px;padding:20px;}
+  .intro4-chk-row label{font-size:15px;}
+  .btn-start{font-size:16px;}
+  .main-mode-area{flex-direction:column;}
+  .mode-card-mini{flex-direction:row;padding:12px 16px;}
+  .mode-card-mini span{text-align:left;}
+}
+@media(min-width:1024px){
+  .intro4-overlay{bottom:100px;}
+  .intro4-chk-row label{font-size:17px;}
+}
 
 /* ===== LOADING / TITLE SCREENS ===== */
 #screen-analyzing,#screen-analyzed,#screen-second-title{align-items:center;justify-content:center;background:#fff;gap:16px;}
@@ -299,73 +299,44 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 </div>
 
 <!-- ===== SCREEN: MAIN ===== -->
-<!-- ===== SCREEN: INTRO 1 – タイトル ===== -->
-<div id="screen-intro1" class="screen active" onclick="showScreen('screen-intro2')">
-  <div class="intro1-circle"></div>
-  <div class="intro1-title">放射熱量AI解析</div>
-  <div class="intro-tap-hint">タップして次へ</div>
-</div>
-
-<!-- ===== SCREEN: INTRO 2 – 説明 ===== -->
-<div id="screen-intro2" class="screen" onclick="showScreen('screen-intro3')">
-  <p class="intro2-text">からだの各部位の表面温度を測定し、<br><span class="blue">AI</span>が解析します。</p>
-  <div class="intro2-nav" onclick="event.stopPropagation()">
-    <button class="btn btn-outline" onclick="showScreen('screen-intro1')">← 戻る</button>
-    <button class="btn btn-primary" onclick="showScreen('screen-intro3')">次へ →</button>
+<!-- ===== 画面1: スタート ===== -->
+<div id="screen-intro1" class="screen intro-slide active">
+  <img src="./images/slide1.png" class="intro-slide-img" alt="放射熱量AI解析">
+  <div class="intro-slide-nav nav-center">
+    <button class="btn-intro-next" onclick="showScreen('screen-intro2')">次へ</button>
   </div>
 </div>
 
-<!-- ===== SCREEN: INTRO 3 – 理想値 ===== -->
-<div id="screen-intro3" class="screen">
-  <div class="intro3-header">理想とされる放射熱量値</div>
-  <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
-    <div style="flex:1;min-width:260px;">
-      <svg viewBox="0 0 520 650" style="width:100%;max-width:380px;display:block;" xmlns="http://www.w3.org/2000/svg">
-        <image id="intro3-body-img" href="./body.png" x="0" y="0" width="497" height="629"/>
-        <!-- 34℃ – 頭/首 -->
-        <circle cx="239" cy="52" r="9" fill="#d32f2f"/>
-        <circle cx="222" cy="115" r="9" fill="#d32f2f"/>
-        <circle cx="268" cy="115" r="9" fill="#d32f2f"/>
-        <line x1="180" y1="80" x2="239" y2="52" stroke="#c00" stroke-width="1.5"/>
-        <line x1="180" y1="80" x2="222" y2="115" stroke="#c00" stroke-width="1.5"/>
-        <text x="175" y="76" text-anchor="end" font-size="22" font-weight="bold" fill="#d32f2f" font-family="sans-serif">34.0℃</text>
-        <!-- 32℃ – 手 -->
-        <circle cx="86" cy="326" r="9" fill="#d32f2f"/>
-        <circle cx="65" cy="379" r="9" fill="#d32f2f"/>
-        <line x1="20" y1="350" x2="86" y2="326" stroke="#c00" stroke-width="1.5"/>
-        <line x1="20" y1="350" x2="65" y2="379" stroke="#c00" stroke-width="1.5"/>
-        <text x="15" y="346" text-anchor="end" font-size="22" font-weight="bold" fill="#d32f2f" font-family="sans-serif">32.0℃</text>
-        <!-- 28℃ – 足 -->
-        <circle cx="180" cy="566" r="9" fill="#d32f2f"/>
-        <circle cx="299" cy="566" r="9" fill="#d32f2f"/>
-        <line x1="130" y1="600" x2="180" y2="566" stroke="#c00" stroke-width="1.5"/>
-        <text x="125" y="608" text-anchor="end" font-size="22" font-weight="bold" fill="#d32f2f" font-family="sans-serif">28.0℃</text>
-      </svg>
-    </div>
-    <div class="intro3-supervisor">
-      <div class="sup-title">監修</div>
-      <div style="font-size:12px;color:#444;line-height:1.6;">東京有明医療大学教授・<br>東洋医学研究所付属クリニック<br>自然医療部門医師</div>
-      <div class="sup-name">川嶋 朗 先生</div>
-      <div class="sup-source">シチズン・システムズ株式会社<br>体温についてページより</div>
-    </div>
-  </div>
-  <div class="intro3-nav">
-    <button class="btn btn-outline" onclick="showScreen('screen-intro2')">← 戻る</button>
-    <button class="btn btn-primary" onclick="showScreen('screen-intro4')">次へ →</button>
+<!-- ===== 画面2: アプリ説明 ===== -->
+<div id="screen-intro2" class="screen intro-slide">
+  <img src="./images/slide2.png" class="intro-slide-img" alt="アプリ説明">
+  <div class="intro-slide-nav">
+    <button class="btn-intro-back" onclick="showScreen('screen-intro1')">← 戻る</button>
+    <button class="btn-intro-next" onclick="showScreen('screen-intro3')">次へ →</button>
   </div>
 </div>
 
-<!-- ===== SCREEN: INTRO 4 – 同意 ===== -->
-<div id="screen-intro4" class="screen">
-  <div class="intro4-wrap">
-    <div class="intro4-checkbox-row" onclick="toggleIntroConsent()">
-      <input type="checkbox" id="intro-consent-chk" class="intro4-chk" onclick="event.stopPropagation();updateAgreeBtn()">
-      <p class="intro4-text">この測定につきましては医療行為等の診断を行うものではない事をご了承ください。<br><br>また、結果につきましてもお客様自身でのご判断となります。</p>
-    </div>
+<!-- ===== 画面3: 基準値説明 ===== -->
+<div id="screen-intro3" class="screen intro-slide">
+  <img src="./images/slide3.png" class="intro-slide-img" alt="基準値説明">
+  <div class="intro-slide-nav">
+    <button class="btn-intro-back" onclick="showScreen('screen-intro2')">← 戻る</button>
+    <button class="btn-intro-next" onclick="showScreen('screen-intro4')">次へ →</button>
   </div>
-  <div class="intro4-nav">
-    <button class="btn btn-outline" onclick="showScreen('screen-intro3')">← 戻る</button>
-    <button class="btn-agree" id="btn-agree" disabled onclick="agreeAndStart()">同意して始める</button>
+</div>
+
+<!-- ===== 画面4: 同意 ===== -->
+<div id="screen-intro4" class="screen intro-slide">
+  <img src="./images/slide4.png" class="intro-slide-img" alt="同意画面">
+  <div class="intro4-overlay">
+    <div class="intro4-chk-row" onclick="toggleIntroConsent()">
+      <input type="checkbox" id="intro-consent-chk" onclick="event.stopPropagation();updateAgreeBtn()">
+      <label for="intro-consent-chk">この測定につきましては医療行為等の診断を行うものではない事をご了承ください。また、結果につきましてもお客様自身でのご判断となります。</label>
+    </div>
+    <button class="btn-start" id="btn-agree" onclick="agreeAndStart()">測定を開始する</button>
+  </div>
+  <div class="intro-slide-nav">
+    <button class="btn-intro-back" onclick="showScreen('screen-intro3')">← 戻る</button>
   </div>
 </div>
 
@@ -1114,7 +1085,7 @@ function toggleIntroConsent() {
 }
 function updateAgreeBtn() {
   const chk = document.getElementById('intro-consent-chk');
-  document.getElementById('btn-agree').disabled = !chk.checked;
+  document.getElementById('btn-agree').classList.toggle('visible', chk.checked);
 }
 function agreeAndStart() {
   if (!document.getElementById('intro-consent-chk').checked) return;
