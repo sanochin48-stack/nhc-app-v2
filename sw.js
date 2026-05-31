@@ -5,10 +5,10 @@ const ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './body.png',
-  './images/slide1.png',
-  './images/slide2.png',
-  './images/slide3.png',
-  './images/slide4.png',
+  './images/slide01.png',
+  './images/slide02.jpg',
+  './images/slide03.JPG',
+  './images/slide04.JPG',
 ];
 
 self.addEventListener('install', e => {
