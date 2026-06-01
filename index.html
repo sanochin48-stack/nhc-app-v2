@@ -1976,10 +1976,6 @@ document.querySelectorAll('.dialog-overlay').forEach(overlay => {
 // INITIALIZATION
 // ============================================================
 function init() {
-  // Force landscape orientation on installed PWA
-  if (screen.orientation && screen.orientation.lock) {
-    screen.orientation.lock('landscape').catch(() => {});
-  }
   // Initialize settings if not present
   getSettings();
   // Refresh baselines labels on input screen
