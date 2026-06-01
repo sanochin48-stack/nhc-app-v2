@@ -226,24 +226,28 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   #screen-main,#screen-customer,#screen-input,#screen-settings{padding:70px 16px 20px;}
 }
 
-/* ===== INTRO SCREENS (image-based) ===== */
+/* ===== 画面1〜3: 画像スライド ===== */
 .intro-slide{position:relative;background:#000;overflow:hidden;}
 .intro-slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
-.intro-slide-nav{position:absolute;bottom:0;left:0;right:0;padding:24px 32px;display:flex;justify-content:space-between;align-items:center;z-index:10;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 100%);}
-.intro-slide-nav.nav-center{justify-content:center;}
+.intro-slide-nav{position:absolute;bottom:0;left:0;right:0;padding:24px 32px;display:flex;justify-content:flex-end;align-items:center;z-index:10;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 100%);}
+.intro-slide-nav.has-back{justify-content:space-between;}
 .btn-intro-next{background:rgba(255,255,255,.92);color:#1a5276;border:none;border-radius:12px;padding:14px 40px;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;min-height:52px;transition:all .2s;}
 .btn-intro-next:hover{background:#fff;transform:translateY(-2px);}
 .btn-intro-back{background:rgba(0,0,0,.35);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:12px;padding:14px 28px;font-size:18px;cursor:pointer;font-family:inherit;min-height:52px;transition:all .2s;}
 .btn-intro-back:hover{background:rgba(0,0,0,.55);}
-.intro4-overlay{position:absolute;bottom:88px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.93);border-radius:16px;padding:24px 28px;width:min(540px,calc(100% - 48px));z-index:10;display:flex;flex-direction:column;gap:20px;backdrop-filter:blur(6px);}
-.intro4-chk-row{display:flex;align-items:flex-start;gap:16px;cursor:pointer;}
-.intro4-chk-row input[type=checkbox]{width:44px;height:44px;flex-shrink:0;accent-color:#1a5276;cursor:pointer;margin-top:2px;}
-.intro4-chk-row label{font-size:16px;line-height:1.8;color:#333;cursor:pointer;}
-.btn-start{display:none;background:#1a5276;color:#fff;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;min-height:56px;transition:all .2s;}
+/* ===== 画面4: 同意（HTML構成）===== */
+#screen-intro4{background:#fff;align-items:center;justify-content:center;padding:60px 24px 100px;gap:32px;}
+.consent-page{max-width:640px;width:100%;display:flex;flex-direction:column;align-items:center;gap:32px;}
+.consent-disclaimer{font-size:18px;line-height:1.9;color:#333;padding:28px 32px;background:#fff8f0;border-radius:12px;border-left:5px solid #e74c3c;width:100%;}
+.consent-chk-wrap{display:flex;align-items:center;gap:20px;cursor:pointer;padding:20px 24px;background:#f0f4f8;border-radius:12px;width:100%;}
+.consent-chk-wrap input[type=checkbox]{width:44px;height:44px;accent-color:#1a5276;flex-shrink:0;cursor:pointer;}
+.consent-chk-wrap label{font-size:20px;color:#333;cursor:pointer;font-weight:600;}
+.btn-start{display:none;background:#27ae60;color:#fff;border:none;border-radius:16px;padding:20px;font-size:20px;font-weight:700;cursor:pointer;font-family:inherit;width:100%;min-height:64px;transition:all .2s;}
 .btn-start.visible{display:block;}
-.btn-start:hover{background:#2471a3;}
-/* ===== SCREEN-MAIN (モード選択) ===== */
-#screen-main{padding:60px 20px 40px;align-items:center;justify-content:flex-start;gap:20px;}
+.btn-start:hover{background:#219a52;}
+.consent-back-nav{position:fixed;bottom:0;left:0;right:0;padding:16px 24px;background:#fff;border-top:1px solid #eee;}
+/* ===== 画面5: モード選択 ===== */
+#screen-main{padding:60px 20px 100px;align-items:center;justify-content:flex-start;gap:20px;}
 .main-mode-area{width:100%;max-width:680px;display:flex;gap:16px;align-items:stretch;}
 .mode-card-hero{background:#fff;border-radius:20px;padding:44px 40px;text-align:center;cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,.1);border:3px solid transparent;transition:all .2s;flex:3;}
 .mode-card-hero:hover{border-color:#2980b9;transform:translateY(-4px);}
@@ -253,20 +257,22 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .mode-card-mini{background:#f0f0f0;border-radius:16px;padding:20px 12px;text-align:center;flex:1;opacity:.5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;pointer-events:none;}
 .mode-card-mini .mode-icon-sm{font-size:28px;}
 .mode-card-mini span{font-size:11px;color:#666;line-height:1.4;}
-/* ===== MEDIA QUERIES ===== */
+.main-back-nav{position:fixed;bottom:0;left:0;right:0;padding:16px 24px;background:#fff;border-top:1px solid #eee;}
+/* ===== メディアクエリ ===== */
 @media(max-width:1023px){
   .intro-slide-nav{padding:16px 20px;}
   .btn-intro-next,.btn-intro-back{padding:12px 22px;font-size:16px;min-height:48px;}
-  .intro4-overlay{bottom:76px;padding:20px;}
-  .intro4-chk-row label{font-size:15px;}
-  .btn-start{font-size:16px;}
+  #screen-intro4{padding:40px 16px 90px;gap:24px;}
+  .consent-disclaimer{font-size:16px;padding:20px 20px;}
+  .consent-chk-wrap label{font-size:18px;}
+  .btn-start{font-size:18px;}
   .main-mode-area{flex-direction:column;}
   .mode-card-mini{flex-direction:row;padding:12px 16px;}
   .mode-card-mini span{text-align:left;}
 }
 @media(min-width:1024px){
-  .intro4-overlay{bottom:100px;}
-  .intro4-chk-row label{font-size:17px;}
+  .consent-disclaimer{font-size:19px;}
+  .consent-chk-wrap label{font-size:21px;}
 }
 
 /* ===== LOADING / TITLE SCREENS ===== */
@@ -300,17 +306,18 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 
 <!-- ===== SCREEN: MAIN ===== -->
 <!-- ===== 画面1: スタート ===== -->
+<!-- ===== 画面1: スタート ===== -->
 <div id="screen-intro1" class="screen intro-slide active">
-  <img src="./images/slide01.png" class="intro-slide-img" alt="放射熱量AI解析">
-  <div class="intro-slide-nav nav-center">
+  <img src="./images/01.png" class="intro-slide-img" alt="放射熱量AI解析">
+  <div class="intro-slide-nav">
     <button class="btn-intro-next" onclick="showScreen('screen-intro2')">次へ</button>
   </div>
 </div>
 
 <!-- ===== 画面2: アプリ説明 ===== -->
 <div id="screen-intro2" class="screen intro-slide">
-  <img src="./images/slide02.jpg" class="intro-slide-img" alt="アプリ説明">
-  <div class="intro-slide-nav">
+  <img src="./images/02.png" class="intro-slide-img" alt="アプリ説明">
+  <div class="intro-slide-nav has-back">
     <button class="btn-intro-back" onclick="showScreen('screen-intro1')">← 戻る</button>
     <button class="btn-intro-next" onclick="showScreen('screen-intro3')">次へ →</button>
   </div>
@@ -318,29 +325,32 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 
 <!-- ===== 画面3: 基準値説明 ===== -->
 <div id="screen-intro3" class="screen intro-slide">
-  <img src="./images/slide03.JPG" class="intro-slide-img" alt="基準値説明">
-  <div class="intro-slide-nav">
+  <img src="./images/03.png" class="intro-slide-img" alt="基準値説明">
+  <div class="intro-slide-nav has-back">
     <button class="btn-intro-back" onclick="showScreen('screen-intro2')">← 戻る</button>
     <button class="btn-intro-next" onclick="showScreen('screen-intro4')">次へ →</button>
   </div>
 </div>
 
-<!-- ===== 画面4: 同意 ===== -->
-<div id="screen-intro4" class="screen intro-slide">
-  <img src="./images/slide04.JPG" class="intro-slide-img" alt="同意画面">
-  <div class="intro4-overlay">
-    <div class="intro4-chk-row" onclick="toggleIntroConsent()">
+<!-- ===== 画面4: 同意（HTML構成）===== -->
+<div id="screen-intro4" class="screen">
+  <div class="consent-page">
+    <div class="consent-disclaimer">
+      この測定につきましては医療行為等の診断を行うものではない事をご了承ください。<br>
+      また、結果につきましてもお客様自身でのご判断となります。
+    </div>
+    <div class="consent-chk-wrap" onclick="toggleIntroConsent()">
       <input type="checkbox" id="intro-consent-chk" onclick="event.stopPropagation();updateAgreeBtn()">
-      <label for="intro-consent-chk">この測定につきましては医療行為等の診断を行うものではない事をご了承ください。また、結果につきましてもお客様自身でのご判断となります。</label>
+      <label for="intro-consent-chk">上記の内容に同意します</label>
     </div>
     <button class="btn-start" id="btn-agree" onclick="agreeAndStart()">測定を開始する</button>
   </div>
-  <div class="intro-slide-nav">
+  <div class="consent-back-nav">
     <button class="btn-intro-back" onclick="showScreen('screen-intro3')">← 戻る</button>
   </div>
 </div>
 
-<!-- ===== SCREEN: MAIN (Slide 5 – モード選択) ===== -->
+<!-- ===== 画面5: モード選択 ===== -->
 <div id="screen-main" class="screen">
   <div class="main-logo">
     <h1>放射熱量AI解析</h1>
@@ -356,6 +366,9 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
       <div class="mode-icon-sm">👥</div>
       <span>2人同時<br>モード</span>
     </div>
+  </div>
+  <div class="main-back-nav">
+    <button class="btn-intro-back" onclick="showScreen('screen-intro4')">← 戻る</button>
   </div>
 </div>
 
