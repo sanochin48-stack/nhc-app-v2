@@ -227,14 +227,15 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 }
 
 /* ===== 画面1〜3: 画像スライド ===== */
-.intro-slide{position:relative;background:#000;overflow:hidden;}
-.intro-slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
-.intro-slide-nav{position:absolute;bottom:0;left:0;right:0;padding:24px 32px;display:flex;justify-content:flex-end;align-items:center;z-index:10;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 100%);}
+.intro-slide{flex-direction:column;background:#f0f0f0;}
+.intro-slide-img-wrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.intro-slide-img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;}
+.intro-slide-nav{flex-shrink:0;padding:16px 24px;display:flex;justify-content:flex-end;align-items:center;background:#fff;border-top:1px solid #ddd;}
 .intro-slide-nav.has-back{justify-content:space-between;}
-.btn-intro-next{background:rgba(255,255,255,.92);color:#1a5276;border:none;border-radius:12px;padding:14px 40px;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;min-height:52px;transition:all .2s;}
-.btn-intro-next:hover{background:#fff;transform:translateY(-2px);}
-.btn-intro-back{background:rgba(0,0,0,.35);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:12px;padding:14px 28px;font-size:18px;cursor:pointer;font-family:inherit;min-height:52px;transition:all .2s;}
-.btn-intro-back:hover{background:rgba(0,0,0,.55);}
+.btn-intro-next{background:#1a5276;color:#fff;border:none;border-radius:12px;padding:14px 40px;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit;min-height:52px;transition:all .2s;}
+.btn-intro-next:hover{background:#2471a3;transform:translateY(-2px);}
+.btn-intro-back{background:#e8e8e8;color:#444;border:1px solid #ccc;border-radius:12px;padding:14px 28px;font-size:18px;cursor:pointer;font-family:inherit;min-height:52px;transition:all .2s;}
+.btn-intro-back:hover{background:#d8d8d8;}
 /* ===== 画面4: 同意（HTML構成）===== */
 #screen-intro4{background:#fff;align-items:center;justify-content:center;padding:60px 24px 100px;gap:32px;}
 .consent-page{max-width:640px;width:100%;display:flex;flex-direction:column;align-items:center;gap:32px;}
@@ -308,7 +309,9 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 <!-- ===== 画面1: スタート ===== -->
 <!-- ===== 画面1: スタート ===== -->
 <div id="screen-intro1" class="screen intro-slide active">
-  <img src="./images/01.png" class="intro-slide-img" alt="放射熱量AI解析">
+  <div class="intro-slide-img-wrap">
+    <img src="./images/01.png" class="intro-slide-img" alt="放射熱量AI解析">
+  </div>
   <div class="intro-slide-nav">
     <button class="btn-intro-next" onclick="showScreen('screen-intro2')">次へ</button>
   </div>
@@ -316,7 +319,9 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 
 <!-- ===== 画面2: アプリ説明 ===== -->
 <div id="screen-intro2" class="screen intro-slide">
-  <img src="./images/02.png" class="intro-slide-img" alt="アプリ説明">
+  <div class="intro-slide-img-wrap">
+    <img src="./images/02.png" class="intro-slide-img" alt="アプリ説明">
+  </div>
   <div class="intro-slide-nav has-back">
     <button class="btn-intro-back" onclick="showScreen('screen-intro1')">← 戻る</button>
     <button class="btn-intro-next" onclick="showScreen('screen-intro3')">次へ →</button>
@@ -325,7 +330,9 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 
 <!-- ===== 画面3: 基準値説明 ===== -->
 <div id="screen-intro3" class="screen intro-slide">
-  <img src="./images/03.png" class="intro-slide-img" alt="基準値説明">
+  <div class="intro-slide-img-wrap">
+    <img src="./images/03.png" class="intro-slide-img" alt="基準値説明">
+  </div>
   <div class="intro-slide-nav has-back">
     <button class="btn-intro-back" onclick="showScreen('screen-intro2')">← 戻る</button>
     <button class="btn-intro-next" onclick="showScreen('screen-intro4')">次へ →</button>
