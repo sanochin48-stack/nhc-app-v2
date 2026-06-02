@@ -420,6 +420,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
       <span class="sr-score-unit">点</span>
     </div>
     <div class="sr-rank-box rank-C" id="sr-rank">--ランク</div>
+    <div id="sr-nofoot-note" style="display:none;margin-top:18px;padding:10px 20px;background:#fff3cd;border:1px solid #f0ad4e;border-radius:10px;color:#856404;font-size:15px;text-align:center;">⚠️ 足なしモードのため解析精度は30％ダウンしています</div>
   </div>
   <div class="sr-nav">
     <button class="btn btn-outline" onclick="showScreen('screen-meas-check')">← 戻る</button>
@@ -1159,6 +1160,7 @@ function showScoreRank() {
   const rankEl = document.getElementById('sr-rank');
   rankEl.textContent = result.rank + 'ランク';
   rankEl.className = 'sr-rank-box rank-' + result.rank;
+  document.getElementById('sr-nofoot-note').style.display = state.withFoot ? 'none' : 'block';
   showScreen('screen-score-rank');
 }
 
