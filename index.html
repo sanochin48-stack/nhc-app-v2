@@ -318,6 +318,19 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 #meas-check-body{flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px 8px;}
 #meas-check-body svg{width:100%;height:100%;max-height:calc(100vh - 80px);}
 .meas-check-nav{flex-shrink:0;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-top:1px solid #ddd;}
+/* ===== 画面9: 部位詳細結果 ===== */
+.result-detail-screen{padding:0!important;background:#f5f6f8;}
+.result-detail-header{flex-shrink:0;padding:60px 24px 14px;background:#1a5276;color:#fff;display:flex;align-items:flex-end;gap:12px;}
+.result-detail-title{font-size:22px;font-weight:bold;flex:1;}
+.result-detail-body{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:16px 24px;gap:12px;}
+.result-detail-img-section{position:relative;width:50%;flex-shrink:0;}
+.result-detail-img{width:100%;height:auto;max-height:36vh;object-fit:contain;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.12);}
+.result-dot{position:absolute;width:18px;height:18px;background:rgba(224,48,32,.9);border-radius:50%;border:3px solid #fff;transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(0,0,0,.5);}
+.result-cards-wrap{width:100%;max-width:960px;}
+.result-pair-cards{display:flex;gap:16px;}
+.result-pair-cards .result-part-card{flex:1;min-width:0;}
+.result-detail-nav{flex-shrink:0;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-top:1px solid #ddd;}
+@media(max-width:1023px){.result-detail-img-section{width:85%;}.result-pair-cards{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -517,77 +530,111 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 </div>
 
 <!-- ===== SCREEN: RESULT FOREHEAD ===== -->
-<div id="screen-result-forehead" class="screen" style="padding:80px 40px 40px;">
-  <div class="result-body">
-    <div class="step-bar" id="step-bar-forehead"></div>
-    <div class="card">
-      <div class="screen-title">① ひたい（額）</div>
+<div id="screen-result-forehead" class="screen result-detail-screen">
+  <div class="result-detail-header">
+    <span class="result-detail-title">① ひたい（額）</span>
+    <div class="step-bar" id="step-bar-forehead" style="margin-bottom:0;"></div>
+  </div>
+  <div class="result-detail-body">
+    <div class="result-detail-img-section">
+      <img src="./images/04.png" class="result-detail-img" alt="ひたい（額）">
+      <div class="result-dot" style="left:50%;top:52%;"></div>
+    </div>
+    <div class="result-cards-wrap">
       <div id="result-forehead-content"></div>
     </div>
-    <div class="nav-buttons">
-      <button class="btn btn-outline" onclick="goBack()">← 戻る</button>
-      <button class="btn btn-primary" onclick="showScreen('screen-result-neck')">次へ（② 首）→</button>
-    </div>
+  </div>
+  <div class="result-detail-nav">
+    <button class="btn btn-outline" onclick="goBack()">← 戻る</button>
+    <button class="btn btn-primary" onclick="showScreen('screen-result-neck')">次へ（② 首）→</button>
   </div>
 </div>
 
 <!-- ===== SCREEN: RESULT NECK ===== -->
-<div id="screen-result-neck" class="screen" style="padding:80px 40px 40px;">
-  <div class="result-body">
-    <div class="step-bar" id="step-bar-neck"></div>
-    <div class="card">
-      <div class="screen-title">② 首</div>
+<div id="screen-result-neck" class="screen result-detail-screen">
+  <div class="result-detail-header">
+    <span class="result-detail-title">② 首</span>
+    <div class="step-bar" id="step-bar-neck" style="margin-bottom:0;"></div>
+  </div>
+  <div class="result-detail-body">
+    <div class="result-detail-img-section">
+      <img src="./images/05.png" class="result-detail-img" alt="首">
+      <div class="result-dot" style="left:38%;top:50%;"></div>
+      <div class="result-dot" style="left:62%;top:50%;"></div>
+    </div>
+    <div class="result-cards-wrap">
       <div id="result-neck-content"></div>
     </div>
-    <div class="nav-buttons">
-      <button class="btn btn-outline" onclick="showScreen('screen-result-forehead')">← 戻る</button>
-      <button class="btn btn-primary" onclick="showScreen('screen-result-hand')">次へ（③ 甲）→</button>
-    </div>
+  </div>
+  <div class="result-detail-nav">
+    <button class="btn btn-outline" onclick="showScreen('screen-result-forehead')">← 戻る</button>
+    <button class="btn btn-primary" onclick="showScreen('screen-result-hand')">次へ（③ 甲）→</button>
   </div>
 </div>
 
 <!-- ===== SCREEN: RESULT HAND ===== -->
-<div id="screen-result-hand" class="screen" style="padding:80px 40px 40px;">
-  <div class="result-body">
-    <div class="step-bar" id="step-bar-hand"></div>
-    <div class="card">
-      <div class="screen-title">③ 甲</div>
+<div id="screen-result-hand" class="screen result-detail-screen">
+  <div class="result-detail-header">
+    <span class="result-detail-title">③ 甲</span>
+    <div class="step-bar" id="step-bar-hand" style="margin-bottom:0;"></div>
+  </div>
+  <div class="result-detail-body">
+    <div class="result-detail-img-section">
+      <img src="./images/06.png" class="result-detail-img" alt="甲">
+      <div class="result-dot" style="left:33%;top:42%;"></div>
+      <div class="result-dot" style="left:67%;top:42%;"></div>
+    </div>
+    <div class="result-cards-wrap">
       <div id="result-hand-content"></div>
     </div>
-    <div class="nav-buttons">
-      <button class="btn btn-outline" onclick="showScreen('screen-result-neck')">← 戻る</button>
-      <button class="btn btn-primary" onclick="showScreen('screen-result-finger')">次へ（④ 指）→</button>
-    </div>
+  </div>
+  <div class="result-detail-nav">
+    <button class="btn btn-outline" onclick="showScreen('screen-result-neck')">← 戻る</button>
+    <button class="btn btn-primary" onclick="showScreen('screen-result-finger')">次へ（④ 指）→</button>
   </div>
 </div>
 
 <!-- ===== SCREEN: RESULT FINGER ===== -->
-<div id="screen-result-finger" class="screen" style="padding:80px 40px 40px;">
-  <div class="result-body">
-    <div class="step-bar" id="step-bar-finger"></div>
-    <div class="card">
-      <div class="screen-title">④ 指</div>
+<div id="screen-result-finger" class="screen result-detail-screen">
+  <div class="result-detail-header">
+    <span class="result-detail-title">④ 指</span>
+    <div class="step-bar" id="step-bar-finger" style="margin-bottom:0;"></div>
+  </div>
+  <div class="result-detail-body">
+    <div class="result-detail-img-section">
+      <img src="./images/07.png" class="result-detail-img" alt="指">
+      <div class="result-dot" style="left:33%;top:38%;"></div>
+      <div class="result-dot" style="left:67%;top:38%;"></div>
+    </div>
+    <div class="result-cards-wrap">
       <div id="result-finger-content"></div>
     </div>
-    <div class="nav-buttons">
-      <button class="btn btn-outline" onclick="showScreen('screen-result-hand')">← 戻る</button>
-      <button class="btn btn-primary" id="btn-after-finger" onclick="">次へ →</button>
-    </div>
+  </div>
+  <div class="result-detail-nav">
+    <button class="btn btn-outline" onclick="showScreen('screen-result-hand')">← 戻る</button>
+    <button class="btn btn-primary" id="btn-after-finger" onclick="">次へ →</button>
   </div>
 </div>
 
 <!-- ===== SCREEN: RESULT FOOT ===== -->
-<div id="screen-result-foot" class="screen" style="padding:80px 40px 40px;">
-  <div class="result-body">
-    <div class="step-bar" id="step-bar-foot"></div>
-    <div class="card">
-      <div class="screen-title">⑤ 足</div>
+<div id="screen-result-foot" class="screen result-detail-screen">
+  <div class="result-detail-header">
+    <span class="result-detail-title">⑤ 足</span>
+    <div class="step-bar" id="step-bar-foot" style="margin-bottom:0;"></div>
+  </div>
+  <div class="result-detail-body">
+    <div class="result-detail-img-section">
+      <img src="./images/08.png" class="result-detail-img" alt="足">
+      <div class="result-dot" style="left:33%;top:45%;"></div>
+      <div class="result-dot" style="left:67%;top:45%;"></div>
+    </div>
+    <div class="result-cards-wrap">
       <div id="result-foot-content"></div>
     </div>
-    <div class="nav-buttons">
-      <button class="btn btn-outline" onclick="showScreen('screen-result-finger')">← 戻る</button>
-      <button class="btn btn-primary" onclick="showScreen('screen-result-total')">次へ（総合結果）→</button>
-    </div>
+  </div>
+  <div class="result-detail-nav">
+    <button class="btn btn-outline" onclick="showScreen('screen-result-finger')">← 戻る</button>
+    <button class="btn btn-primary" onclick="showScreen('screen-result-total')">次へ（総合結果）→</button>
   </div>
 </div>
 
@@ -1476,20 +1523,26 @@ function renderResults(result) {
 
   // Neck
   document.getElementById('result-neck-content').innerHTML =
+    '<div class="result-pair-cards">' +
     renderPartCard('neckR', result, isSecond) +
     renderPartCard('neckL', result, isSecond) +
+    '</div>' +
     renderBalanceCard('neckL', result, isSecond);
 
   // Hand
   document.getElementById('result-hand-content').innerHTML =
+    '<div class="result-pair-cards">' +
     renderPartCard('handR', result, isSecond) +
     renderPartCard('handL', result, isSecond) +
+    '</div>' +
     renderBalanceCard('handL', result, isSecond);
 
   // Finger
   document.getElementById('result-finger-content').innerHTML =
+    '<div class="result-pair-cards">' +
     renderPartCard('fingerR', result, isSecond) +
     renderPartCard('fingerL', result, isSecond) +
+    '</div>' +
     renderBalanceCard('fingerL', result, isSecond);
 
   // Foot
@@ -1497,8 +1550,10 @@ function renderResults(result) {
     document.getElementById('result-foot-content').innerHTML = '<p style="color:#888;">足なしモードのためスキップされました。</p>';
   } else {
     document.getElementById('result-foot-content').innerHTML =
+      '<div class="result-pair-cards">' +
       renderPartCard('footR', result, isSecond) +
       renderPartCard('footL', result, isSecond) +
+      '</div>' +
       renderBalanceCard('footL', result, isSecond);
   }
 
