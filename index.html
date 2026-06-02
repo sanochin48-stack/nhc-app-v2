@@ -1033,9 +1033,9 @@ function calculateAll(vals, withFoot) {
   }
 
   if (!withFoot && !isSecond) {
-    // 足なし・初回（上限70点）
+    // 足なし・初回（上限70点）足なし最大: wPoints40 + bPoints15 = 55
     const pureTotal = wScore + bScore;
-    const finalScore = Math.min(70, Math.round(pureTotal / 40 * 70));
+    const finalScore = Math.min(70, Math.round(pureTotal / 55 * 70));
     const rank = getRank(finalScore);
     return { parts, balances, wScore, bScore, pureTotal, finalScore, rank, withFoot:false };
   }
