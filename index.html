@@ -404,9 +404,9 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
       <div class="screen-title">📊 測定値入力</div>
       <div id="input-alert" class="alert alert-error"></div>
       <div class="meas-grid">
-        <!-- 行1: おでこ -->
+        <!-- 行1: ひたい（額）-->
         <div class="meas-item meas-item-full">
-          <span class="meas-label">おでこ <span class="baseline" id="lbl-forehead"></span></span>
+          <span class="meas-label">ひたい（額） <span class="baseline" id="lbl-forehead"></span></span>
           <input type="number" id="inp-forehead" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
           <span class="meas-warn" id="warn-forehead">入力値はあっていますか？</span>
         </div>
@@ -473,7 +473,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   <div class="result-body">
     <div class="step-bar" id="step-bar-forehead"></div>
     <div class="card">
-      <div class="screen-title">① おでこ</div>
+      <div class="screen-title">① ひたい（額）</div>
       <div id="result-forehead-content"></div>
     </div>
     <div class="nav-buttons">
@@ -620,7 +620,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 
       <!-- Score Tables -->
       <div class="settings-section">
-        <div class="settings-section-title">📈 スコアテーブル（首・甲・指・おでこ系）</div>
+        <div class="settings-section-title">📈 スコアテーブル（首・甲・指・ひたい（額）系）</div>
         <div id="score-table-neck"></div>
       </div>
       <div class="settings-section">
@@ -701,7 +701,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 // CONSTANTS & DEFAULT SETTINGS
 // ============================================================
 const PART_DEFS = {
-  forehead: { label: 'おでこ', system: 'neck' },
+  forehead: { label: 'ひたい（額）', system: 'neck' },
   neckR:    { label: '首 右',  system: 'neck' },
   neckL:    { label: '首 左',  system: 'neck', balancePair: 'neckR' },
   handR:    { label: '甲 右',  system: 'neck' },
@@ -1261,7 +1261,7 @@ function calculate() {
   renderResults(result);
   renderStepBars();
   updateFingerNextButton();
-  showAnalyzing();
+  showScreen('screen-result-forehead');
 }
 
 // ============================================================
@@ -1405,7 +1405,7 @@ function buildBodyDiagram(result) {
   for (const k in RAW) DOTS[k] = [RAW[k][0] + DX, RAW[k][1] + DY];
 
   const configs = [
-    { key:'forehead', name:'おでこ', lx:325,  ly:30,  align:'right'  },
+    { key:'forehead', name:'ひたい（額）', lx:325,  ly:30,  align:'right'  },
     { key:'neckR',    name:'首 右',  lx:280,  ly:138, align:'right'  },
     { key:'neckL',    name:'首 左',  lx:560,  ly:138, align:'left'   },
     { key:'handR',    name:'甲 右',  lx:140,  ly:326, align:'right'  },
@@ -1551,8 +1551,8 @@ function showFinalComparison() {
 function renderStepBars() {
   const withFoot = state.withFoot;
   const steps = withFoot
-    ? ['おでこ','首','甲','指','足','総合']
-    : ['おでこ','首','甲','指','総合'];
+    ? ['ひたい（額）','首','甲','指','足','総合']
+    : ['ひたい（額）','首','甲','指','総合'];
 
   const screens = withFoot
     ? ['forehead','neck','hand','finger','foot','total']
@@ -1767,7 +1767,7 @@ function renderSettingsScreen() {
 
   // Baselines
   const partLabels = {
-    forehead:'おでこ', neckR:'首 右', neckL:'首 左',
+    forehead:'ひたい（額）', neckR:'首 右', neckL:'首 左',
     handR:'甲 右', handL:'甲 左', fingerR:'指 右',
     fingerL:'指 左', footR:'足 右', footL:'足 左',
   };
