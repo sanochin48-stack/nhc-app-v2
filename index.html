@@ -1266,6 +1266,7 @@ function renderMeasCheck(targetId) {
 
   const svgH = state.withFoot ? 695 : 580;
   const LW = 118, LH = 66;
+  const isSecond = state.session === 2;
 
   const items = active.map(c => {
     const val = parseFloat(vals[c.key]);
@@ -1273,20 +1274,21 @@ function renderMeasCheck(targetId) {
     const baseline = s.baselines[c.key];
     const diff = Math.round((val - baseline) * 10) / 10;
     const isFoot = c.key==='footR' || c.key==='footL';
-    const color = isFoot ? '#e03020' : diff < 0 ? '#4a90d9' : '#e8a020';
+    const color = isSecond ? '#888' : (isFoot ? '#e03020' : diff < 0 ? '#4a90d9' : '#e8a020');
     const diffStr = (diff >= 0 ? '+' : '') + diff.toFixed(1) + '℃';
     const dot = DOTS[c.key];
     const bx = c.align==='right' ? c.lx-LW : c.lx;
     const by = c.ly - LH/2;
     const cx = bx + LW/2;
     const lineX = c.align==='right' ? bx+LW : bx;
+    const valueY = isSecond ? by+44 : by+40;
     return `
       <circle cx="${dot[0]}" cy="${dot[1]}" r="7" fill="${color}"/>
       <line x1="${dot[0]}" y1="${dot[1]}" x2="${lineX}" y2="${c.ly}" stroke="${color}" stroke-width="1.5"/>
       <rect x="${bx}" y="${by}" width="${LW}" height="${LH}" rx="6" fill="#fff" stroke="${color}" stroke-width="2.5"/>
       <text x="${cx}" y="${by+18}" text-anchor="middle" font-size="13" font-weight="600" fill="#555" font-family="sans-serif">${c.name}</text>
-      <text x="${cx}" y="${by+40}" text-anchor="middle" font-size="17" font-weight="bold" fill="#222" font-family="sans-serif">${val.toFixed(1)}℃</text>
-      <text x="${cx}" y="${by+60}" text-anchor="middle" font-size="14" font-weight="bold" fill="${color}" font-family="sans-serif">${diffStr}</text>`;
+      <text x="${cx}" y="${valueY}" text-anchor="middle" font-size="17" font-weight="bold" fill="#222" font-family="sans-serif">${val.toFixed(1)}℃</text>
+      ${!isSecond ? `<text x="${cx}" y="${by+60}" text-anchor="middle" font-size="14" font-weight="bold" fill="${color}" font-family="sans-serif">${diffStr}</text>` : ''}`;
   }).join('');
 
   const imgSrc = window._NHC_BODY_IMG
