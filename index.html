@@ -1674,21 +1674,19 @@ function renderTotalResult(result) {
   let scoreHeaderHTML = '';
   if (!isSecond) {
     scoreHeaderHTML = `
-      <span style="font-size:13px;color:#888;letter-spacing:1px;">スコア</span>
-      <span style="font-size:48px;font-weight:bold;color:${rankColor};line-height:1.1;">${result.rank}</span>
-      <span style="font-size:20px;font-weight:bold;color:#444;">${result.finalScore}点</span>`;
+      <span style="font-size:32px;font-weight:bold;color:#333;line-height:1.1;">${result.finalScore}点</span>
+      <span style="font-size:44px;font-weight:bold;color:${rankColor};line-height:1.1;">${result.rank}ランク</span>`;
   } else if (state.firstMeasureData) {
     const firstRank = state.firstMeasureData.rank;
     const firstScore = state.firstMeasureData.totalScore;
     const firstColor = getRankColor(firstRank);
     scoreHeaderHTML = `
-      <span style="font-size:13px;color:#888;letter-spacing:1px;">スコア</span>
+      <span style="font-size:13px;color:#888;">${firstScore}点 → <strong style="color:#333;">${result.finalScore}点</strong></span>
       <div style="display:flex;align-items:center;gap:6px;">
-        <span style="font-size:28px;font-weight:bold;color:${firstColor};line-height:1;">${firstRank}</span>
-        <span style="font-size:20px;color:#3498db;">→</span>
-        <span style="font-size:38px;font-weight:bold;color:${rankColor};line-height:1;">${result.rank}</span>
-      </div>
-      <span style="font-size:13px;color:#888;">${firstScore}点 → ${result.finalScore}点</span>`;
+        <span style="font-size:26px;font-weight:bold;color:${firstColor};line-height:1;">${firstRank}</span>
+        <span style="font-size:18px;color:#3498db;">→</span>
+        <span style="font-size:36px;font-weight:bold;color:${rankColor};line-height:1;">${result.rank}</span>
+      </div>`;
   }
   document.getElementById('total-score-header').innerHTML = scoreHeaderHTML;
 

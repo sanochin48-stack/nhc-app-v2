@@ -1,4 +1,4 @@
-const CACHE_NAME = 'taion-app-v20';
+const CACHE_NAME = 'taion-app-v21';
 const ASSETS = [
   './index.html',
   './manifest.json',
