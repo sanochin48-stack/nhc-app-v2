@@ -313,12 +313,12 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 #screen-session2-final{flex-direction:column;background:#f5f6f8;height:100vh;height:100dvh;overflow:hidden;position:relative;}
 #s2f-body-wrap{flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px 8px;}
 #s2f-body-wrap svg{width:100%;height:100%;}
-.s2f-score-badge{position:absolute;top:14px;right:16px;z-index:10;display:flex;align-items:center;gap:10px;background:#fff;padding:10px 20px;border-radius:18px;box-shadow:0 2px 14px rgba(0,0,0,.14);}
+.s2f-score-badge{position:absolute;top:72px;right:16px;z-index:10;display:flex;align-items:center;gap:10px;background:#fff;padding:10px 20px;border-radius:18px;box-shadow:0 2px 14px rgba(0,0,0,.14);}
 .s2f-score1{font-size:32px;font-weight:bold;line-height:1;}
-.s2f-arrow-wrap{font-size:32px;color:#2980b9;display:inline-block;animation:s2f-arr 0.85s ease-in-out infinite;}
+.s2f-arrow-wrap{font-size:32px;color:#2980b9;display:inline-block;animation:s2f-arr 1.7s ease-in-out infinite;}
 @keyframes s2f-arr{0%,100%{transform:translateX(0);}50%{transform:translateX(10px);}}
 .s2f-score2{font-size:44px;font-weight:bold;color:#e03020;line-height:1;}
-.s2f-nav{flex-shrink:0;padding:16px 24px;display:flex;justify-content:flex-end;background:#fff;border-top:1px solid #ddd;}
+.s2f-nav{flex-shrink:0;padding:16px 24px;display:flex;justify-content:space-between;background:#fff;border-top:1px solid #ddd;}
 /* ===== 画面8: スコア&ランク ===== */
 #screen-score-rank{background:#fff;flex-direction:column;}
 #screen-score-rank .sr-body{opacity:0;transition:opacity 9s ease;}
@@ -741,6 +741,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   </div>
   <div id="s2f-body-wrap"></div>
   <div class="s2f-nav">
+    <button class="btn btn-outline" onclick="showScoreRank()">← 戻る</button>
     <button class="btn btn-primary" onclick="startOver()">最初へ</button>
   </div>
 </div>
