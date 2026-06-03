@@ -309,6 +309,16 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .fcs-arrow{font-size:48px;color:#3498db;margin:4px 0;display:block;}
 .final-comp-msg{font-size:20px;color:#2980b9;font-weight:bold;margin-top:28px;line-height:1.5;}
 .final-comp-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 20px;border-top:1px solid #eee;display:flex;justify-content:center;}
+/* ===== SESSION 2 FINAL SCREEN ===== */
+#screen-session2-final{flex-direction:column;background:#f5f6f8;height:100vh;height:100dvh;overflow:hidden;position:relative;}
+#s2f-body-wrap{flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px 8px;}
+#s2f-body-wrap svg{width:100%;height:100%;}
+.s2f-score-badge{position:absolute;top:14px;right:16px;z-index:10;display:flex;align-items:center;gap:10px;background:#fff;padding:10px 20px;border-radius:18px;box-shadow:0 2px 14px rgba(0,0,0,.14);}
+.s2f-score1{font-size:32px;font-weight:bold;line-height:1;}
+.s2f-arrow-wrap{font-size:32px;color:#2980b9;display:inline-block;animation:s2f-arr 0.85s ease-in-out infinite;}
+@keyframes s2f-arr{0%,100%{transform:translateX(0);}50%{transform:translateX(10px);}}
+.s2f-score2{font-size:44px;font-weight:bold;color:#e03020;line-height:1;}
+.s2f-nav{flex-shrink:0;padding:16px 24px;display:flex;justify-content:flex-end;background:#fff;border-top:1px solid #ddd;}
 /* ===== 画面8: スコア&ランク ===== */
 #screen-score-rank{background:#fff;flex-direction:column;}
 #screen-score-rank .sr-body{opacity:0;transition:opacity 9s ease;}
@@ -486,7 +496,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   </div>
   <div class="sr-nav">
     <button class="btn btn-outline" onclick="showScreen('screen-meas-check')">← 戻る</button>
-    <button class="btn btn-primary" id="sr-next-btn" onclick="showScreen('screen-result-forehead')">次へ →</button>
+    <button class="btn btn-primary" id="sr-next-btn" onclick="onSrNextBtn()">次へ →</button>
   </div>
 </div>
 
@@ -719,6 +729,19 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   <div id="final-comp-content" class="final-comp-wrap"></div>
   <div class="final-comp-footer">
     <button class="btn btn-outline" onclick="startOver()">最初へ</button>
+  </div>
+</div>
+
+<!-- ===== SCREEN: SESSION 2 FINAL ===== -->
+<div id="screen-session2-final" class="screen">
+  <div class="s2f-score-badge">
+    <span class="s2f-score1" id="s2f-score1">C (68)</span>
+    <span class="s2f-arrow-wrap">➡</span>
+    <span class="s2f-score2" id="s2f-score2">D (47)</span>
+  </div>
+  <div id="s2f-body-wrap"></div>
+  <div class="s2f-nav">
+    <button class="btn btn-primary" onclick="startOver()">最初へ</button>
   </div>
 </div>
 
@@ -1370,6 +1393,85 @@ function renderMeasCheck(targetId) {
     : './images/body.png';
 
   document.getElementById(targetId || 'meas-check-body').innerHTML =
+    `<svg viewBox="0 0 840 ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+      <image href="${imgSrc}" x="${DX}" y="${DY}" width="497" height="629"/>
+      ${items}
+    </svg>`;
+}
+
+// ============================================================
+// SESSION 2 FINAL SCREEN
+// ============================================================
+function onSrNextBtn() {
+  if (state.session === 2) {
+    showSession2Final();
+  } else {
+    showScreen('screen-result-forehead');
+  }
+}
+
+function showSession2Final() {
+  const result = state.calcResult;
+  const firstData = state.firstMeasureData;
+  if (!result || !firstData) return;
+  const el1 = document.getElementById('s2f-score1');
+  el1.textContent = `${firstData.rank} (${firstData.totalScore})`;
+  el1.style.color = getRankColor(firstData.rank);
+  document.getElementById('s2f-score2').textContent = `${result.rank} (${result.finalScore})`;
+  renderSession2Final();
+  showScreen('screen-session2-final');
+}
+
+function renderSession2Final() {
+  const vals2 = state.vals;
+  const vals1 = (state.firstMeasureData && state.firstMeasureData.vals) ? state.firstMeasureData.vals : {};
+  const DX = 160, DY = 15;
+  const RAW = {
+    forehead:[239,37], neckR:[222,100], neckL:[268,100],
+    handR:[86,311],    handL:[398,314],
+    fingerR:[65,364],  fingerL:[417,366],
+    footR:[180,551],   footL:[299,551],
+  };
+  const DOTS = {};
+  for (const k in RAW) DOTS[k] = [RAW[k][0]+DX, RAW[k][1]+DY];
+  const configs = [
+    {key:'forehead',name:'ひたい（額）',lx:325, ly:50,  align:'right'},
+    {key:'neckR',   name:'首 右',       lx:280, ly:140, align:'right'},
+    {key:'neckL',   name:'首 左',       lx:560, ly:140, align:'left' },
+    {key:'handR',   name:'甲 右',       lx:135, ly:320, align:'right'},
+    {key:'handL',   name:'甲 左',       lx:705, ly:323, align:'left' },
+    {key:'fingerR', name:'指 右',       lx:135, ly:400, align:'right'},
+    {key:'fingerL', name:'指 左',       lx:705, ly:400, align:'left' },
+    {key:'footR',   name:'足 右',       lx:330, ly:620, align:'right'},
+    {key:'footL',   name:'足 左',       lx:510, ly:620, align:'left' },
+  ];
+  const active = configs.filter(c => {
+    if ((c.key==='footR'||c.key==='footL') && !state.withFoot) return false;
+    const v = vals2[c.key];
+    return v !== undefined && v !== null && v !== '';
+  });
+  const svgH = state.withFoot ? 695 : 580;
+  const LW = 118, LH = 78;
+  const items = active.map(c => {
+    const val2 = parseFloat(vals2[c.key]);
+    if (isNaN(val2)) return '';
+    const val1 = parseFloat(vals1[c.key]);
+    const dot = DOTS[c.key];
+    const bx = c.align==='right' ? c.lx-LW : c.lx;
+    const by = c.ly - LH/2;
+    const cx = bx + LW/2;
+    const lineX = c.align==='right' ? bx+LW : bx;
+    const v1Str = isNaN(val1) ? '--' : val1.toFixed(1)+'℃';
+    return `
+      <circle cx="${dot[0]}" cy="${dot[1]}" r="7" fill="#999"/>
+      <line x1="${dot[0]}" y1="${dot[1]}" x2="${lineX}" y2="${c.ly}" stroke="#999" stroke-width="1.5"/>
+      <rect x="${bx}" y="${by}" width="${LW}" height="${LH}" rx="6" fill="#fff" stroke="#ccc" stroke-width="2"/>
+      <text x="${cx}" y="${by+15}" text-anchor="middle" font-size="12" font-weight="600" fill="#555" font-family="sans-serif">${c.name}</text>
+      <text x="${cx}" y="${by+37}" text-anchor="middle" font-size="14" fill="#888" font-family="sans-serif">${v1Str}</text>
+      <text x="${cx}" y="${by+63}" text-anchor="middle" font-size="19" font-weight="bold" fill="#e03020" font-family="sans-serif">${val2.toFixed(1)}℃</text>`;
+  }).join('');
+  const imgSrc = window._NHC_BODY_IMG ? `data:image/png;base64,${window._NHC_BODY_IMG}` : './images/body.png';
+  document.getElementById('s2f-body-wrap').innerHTML =
     `<svg viewBox="0 0 840 ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
       <image href="${imgSrc}" x="${DX}" y="${DY}" width="497" height="629"/>
       ${items}
