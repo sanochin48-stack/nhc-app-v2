@@ -322,7 +322,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .sr-rank-box{font-size:44px;font-weight:bold;padding:18px 56px;border-radius:20px;letter-spacing:6px;}
 .sr-nav{flex-shrink:0;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-top:1px solid #ddd;}
 /* Session 2 comparison layout — each element fades in sequentially via JS */
-.sr-cmp-row{display:flex;align-items:center;width:100%;max-width:none;gap:10px;padding:14px 18px;background:#f8f9fa;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);opacity:0;transition:opacity 1.5s ease;}
+.sr-cmp-row{display:flex;align-items:center;width:60%;max-width:none;gap:10px;padding:14px 18px;background:#f8f9fa;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);opacity:0;transition:opacity 1.5s ease;}
 .sr-cmp-label{flex:1;font-size:36px;color:#555;line-height:1.2;white-space:nowrap;}
 .sr-cmp-rank{font-size:80px;font-weight:bold;line-height:1;flex-shrink:0;}
 .sr-cmp-paren{font-size:17px;font-weight:bold;color:#666;white-space:nowrap;flex-shrink:0;}
@@ -1276,7 +1276,7 @@ function showScoreRank() {
     document.getElementById('sr-second-paren').textContent = `(${result.finalScore}点)`;
     document.getElementById('sr-body-s1').style.display = 'none';
     document.getElementById('sr-body-s2').style.display = 'flex';
-    document.getElementById('sr-next-btn').style.display = 'none';
+    document.getElementById('sr-next-btn').style.display = '';
     // Reset all items invisible before showing screen
     ['sr-cmp-row1','sr-cmp-arrow-el','sr-cmp-row2','sr-cmp-msg-el'].forEach(id => {
       document.getElementById(id).style.opacity = '0';
