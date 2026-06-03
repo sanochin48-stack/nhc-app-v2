@@ -493,6 +493,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
       <span class="sr-cmp-paren" id="sr-second-paren">(--点)</span>
     </div>
     <div class="sr-cmp-msg" id="sr-cmp-msg-el">総合的に変化についてみてみましょう</div>
+    <div id="sr-nofoot-note-s2" style="display:none;padding:10px 20px;background:#fff3cd;border:1px solid #f0ad4e;border-radius:10px;color:#856404;font-size:15px;text-align:center;">⚠️ 足なしモードのため解析精度は30％ダウンしています</div>
   </div>
   <div class="sr-nav">
     <button class="btn btn-outline" onclick="showScreen('screen-meas-check')">← 戻る</button>
@@ -740,6 +741,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
     <span class="s2f-score2" id="s2f-score2">D (47)</span>
   </div>
   <div id="s2f-body-wrap"></div>
+  <div id="s2f-nofoot-note" style="display:none;padding:8px 20px;background:#fff3cd;border-top:1px solid #f0ad4e;color:#856404;font-size:15px;text-align:center;flex-shrink:0;">⚠️ 足なしモードのため解析精度は30％ダウンしています</div>
   <div class="s2f-nav">
     <button class="btn btn-outline" onclick="showScoreRank()">← 戻る</button>
     <button class="btn btn-primary" onclick="startOver()">最初へ</button>
@@ -1302,6 +1304,7 @@ function showScoreRank() {
     document.getElementById('sr-body-s1').style.display = 'none';
     document.getElementById('sr-body-s2').style.display = 'flex';
     document.getElementById('sr-next-btn').style.display = '';
+    document.getElementById('sr-nofoot-note-s2').style.display = state.withFoot ? 'none' : 'block';
     // Reset all items invisible before showing screen
     ['sr-cmp-row1','sr-cmp-arrow-el','sr-cmp-row2','sr-cmp-msg-el'].forEach(id => {
       document.getElementById(id).style.opacity = '0';
@@ -1421,6 +1424,7 @@ function showSession2Final() {
   el1.style.color = getRankColor(firstData.rank);
   document.getElementById('s2f-score2').textContent = `${result.rank} (${result.finalScore})`;
   renderSession2Final();
+  document.getElementById('s2f-nofoot-note').style.display = state.withFoot ? 'none' : 'block';
   showScreen('screen-session2-final');
 }
 
