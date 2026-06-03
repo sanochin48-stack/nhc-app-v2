@@ -282,8 +282,8 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .analyzing-sub{font-size:16px;color:#aaa;margin-top:-8px;}
 
 /* ===== REDESIGNED TOTAL RESULT ===== */
-#screen-result-total{padding:0!important;background:#fff;}
-#total-score-header{padding:12px 20px 8px;display:flex;justify-content:flex-end;align-items:center;min-height:64px;}
+#screen-result-total{padding:0!important;background:#f5f6f8;position:relative;}
+#total-score-header{position:absolute;top:68px;right:16px;z-index:50;background:rgba(255,255,255,0.96);border-radius:14px;padding:10px 18px;box-shadow:0 3px 12px rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;gap:2px;min-width:100px;}
 #total-action-area{padding:12px 20px;border-top:1px solid #eee;background:#fff;}
 
 /* ===== FINAL COMPARISON ===== */
@@ -1670,23 +1670,25 @@ function renderTotalResult(result) {
   const isSecond = state.session === 2;
   const rankColor = getRankColor(result.rank);
 
-  // Score header at top right
+  // Score badge at top right (absolute overlay)
   let scoreHeaderHTML = '';
   if (!isSecond) {
     scoreHeaderHTML = `
-      <span style="font-size:18px;color:#555;margin-right:4px;">スコア：</span>
-      <span style="font-size:52px;font-weight:bold;color:${rankColor};line-height:1;">${result.rank}</span>
-      <span style="font-size:22px;color:#666;margin-left:4px;">（${result.finalScore}）</span>`;
+      <span style="font-size:13px;color:#888;letter-spacing:1px;">スコア</span>
+      <span style="font-size:48px;font-weight:bold;color:${rankColor};line-height:1.1;">${result.rank}</span>
+      <span style="font-size:20px;font-weight:bold;color:#444;">${result.finalScore}点</span>`;
   } else if (state.firstMeasureData) {
     const firstRank = state.firstMeasureData.rank;
     const firstScore = state.firstMeasureData.totalScore;
     const firstColor = getRankColor(firstRank);
     scoreHeaderHTML = `
-      <span style="font-size:36px;font-weight:bold;color:${firstColor};line-height:1;">${firstRank}</span>
-      <span style="font-size:14px;color:#888;margin:0 2px;">（${firstScore}）</span>
-      <span style="font-size:32px;color:#3498db;margin:0 10px;">→</span>
-      <span style="font-size:52px;font-weight:bold;color:${rankColor};line-height:1;">${result.rank}</span>
-      <span style="font-size:14px;color:#888;margin-left:2px;">（${result.finalScore}）</span>`;
+      <span style="font-size:13px;color:#888;letter-spacing:1px;">スコア</span>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span style="font-size:28px;font-weight:bold;color:${firstColor};line-height:1;">${firstRank}</span>
+        <span style="font-size:20px;color:#3498db;">→</span>
+        <span style="font-size:38px;font-weight:bold;color:${rankColor};line-height:1;">${result.rank}</span>
+      </div>
+      <span style="font-size:13px;color:#888;">${firstScore}点 → ${result.finalScore}点</span>`;
   }
   document.getElementById('total-score-header').innerHTML = scoreHeaderHTML;
 
