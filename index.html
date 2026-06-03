@@ -743,8 +743,10 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   <div id="s2f-body-wrap"></div>
   <div id="s2f-nofoot-note" style="display:none;padding:8px 20px;background:#fff3cd;border-top:1px solid #f0ad4e;color:#856404;font-size:15px;text-align:center;flex-shrink:0;">⚠️ 足なしモードのため解析精度は30％ダウンしています</div>
   <div class="s2f-nav">
-    <button class="btn btn-outline" onclick="showScoreRank()">← 戻る</button>
-    <button class="btn btn-secondary" onclick="showScreen('screen-input')">再測定</button>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline" onclick="showScoreRank()">← 戻る</button>
+      <button class="btn btn-secondary" onclick="showScreen('screen-input')">再測定</button>
+    </div>
     <button class="btn btn-primary" onclick="startOver()">最初へ</button>
   </div>
 </div>
