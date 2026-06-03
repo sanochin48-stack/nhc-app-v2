@@ -47,15 +47,16 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .customer-body{max-width:600px;margin:0 auto;width:100%;}
 
 /* ===== INPUT SCREEN ===== */
-#screen-input{padding:60px 24px 12px;height:100vh;height:100dvh;overflow:hidden;}
-#screen-input .input-body{display:flex;flex-direction:column;height:100%;}
-#screen-input .card{padding:14px 18px;margin-bottom:10px;flex:1;display:flex;flex-direction:column;}
-#screen-input .screen-title{font-size:18px;margin-bottom:10px;padding-bottom:8px;}
+#screen-input{padding:0!important;height:100vh;height:100dvh;overflow:hidden;flex-direction:column;}
+.input-scroll-area{flex:1;overflow:hidden;padding:48px 20px 8px;display:flex;flex-direction:column;}
+#screen-input .input-body{flex:1;overflow:hidden;display:flex;flex-direction:column;max-width:900px;margin:0 auto;width:100%;}
+#screen-input .card{padding:12px 18px;margin-bottom:0;flex:1;display:flex;flex-direction:column;overflow:hidden;}
+#screen-input .screen-title{font-size:18px;margin-bottom:8px;padding-bottom:6px;}
 #screen-input .meas-grid{gap:8px;flex:1;}
 #screen-input .meas-item{gap:3px;}
 #screen-input .meas-input{padding:7px 10px;font-size:20px;}
 #screen-input .no-foot-bar{padding:8px 14px;}
-#screen-input .nav-buttons{margin-top:10px;}
+.input-bottom-nav{flex-shrink:0;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-top:1px solid #ddd;}
 .input-body{max-width:800px;margin:0 auto;width:100%;}
 
 /* ===== RESULT SCREENS ===== */
@@ -231,7 +232,9 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   .mode-card{padding:28px 30px;}
   .rank-grid{grid-template-columns:repeat(3,1fr);}
   .settings-grid{grid-template-columns:repeat(2,1fr);}
-  #screen-main,#screen-customer,#screen-input,#screen-settings{padding:70px 16px 20px;}
+  #screen-main,#screen-customer,#screen-settings{padding:70px 16px 20px;}
+  #screen-input{padding:0!important;}
+  .input-scroll-area{padding:44px 12px 6px;}
 }
 
 /* ===== 画面1〜3: 画像スライド ===== */
@@ -470,72 +473,74 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 
 <!-- ===== SCREEN: MEASUREMENT INPUT ===== -->
 <div id="screen-input" class="screen">
-  <div class="input-body">
-    <div class="card">
-      <div class="screen-title">📊 測定値入力</div>
-      <div id="input-alert" class="alert alert-error"></div>
-      <div class="meas-grid">
-        <!-- 行1: ひたい（額）-->
-        <div class="meas-item meas-item-full">
-          <span class="meas-label">ひたい（額） <span class="baseline" id="lbl-forehead"></span></span>
-          <input type="number" id="inp-forehead" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
-          <span class="meas-warn" id="warn-forehead">入力値はあっていますか？</span>
-        </div>
-        <!-- 行2: 首 -->
-        <div class="meas-item">
-          <span class="meas-label">首 右 <span class="baseline" id="lbl-neckR"></span></span>
-          <input type="number" id="inp-neckR" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
-          <span class="meas-warn" id="warn-neckR">入力値はあっていますか？</span>
-        </div>
-        <div class="meas-item">
-          <span class="meas-label">首 左 <span class="baseline" id="lbl-neckL"></span></span>
-          <input type="number" id="inp-neckL" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
-          <span class="meas-warn" id="warn-neckL">入力値はあっていますか？</span>
-        </div>
-        <!-- 行3: 甲 -->
-        <div class="meas-item">
-          <span class="meas-label">甲 右 <span class="baseline" id="lbl-handR"></span></span>
-          <input type="number" id="inp-handR" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
-          <span class="meas-warn" id="warn-handR">入力値はあっていますか？</span>
-        </div>
-        <div class="meas-item">
-          <span class="meas-label">甲 左 <span class="baseline" id="lbl-handL"></span></span>
-          <input type="number" id="inp-handL" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
-          <span class="meas-warn" id="warn-handL">入力値はあっていますか？</span>
-        </div>
-        <!-- 行4: 指 -->
-        <div class="meas-item">
-          <span class="meas-label">指 右 <span class="baseline" id="lbl-fingerR"></span></span>
-          <input type="number" id="inp-fingerR" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
-          <span class="meas-warn" id="warn-fingerR">入力値はあっていますか？</span>
-        </div>
-        <div class="meas-item">
-          <span class="meas-label">指 左 <span class="baseline" id="lbl-fingerL"></span></span>
-          <input type="number" id="inp-fingerL" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
-          <span class="meas-warn" id="warn-fingerL">入力値はあっていますか？</span>
-        </div>
-        <!-- 行5: 足なしチェック -->
-        <div class="no-foot-bar" onclick="toggleNoFoot()">
-          <input type="checkbox" id="no-foot-chk">
-          <label for="no-foot-chk">🦶 足なしモード（足の測定なし）</label>
-        </div>
-        <!-- 行6: 足 -->
-        <div class="meas-item" id="foot-r-item">
-          <span class="meas-label">足 右 <span class="baseline" id="lbl-footR"></span></span>
-          <input type="number" id="inp-footR" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
-          <span class="meas-warn" id="warn-footR">入力値はあっていますか？</span>
-        </div>
-        <div class="meas-item" id="foot-l-item">
-          <span class="meas-label">足 左 <span class="baseline" id="lbl-footL"></span></span>
-          <input type="number" id="inp-footL" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
-          <span class="meas-warn" id="warn-footL">入力値はあっていますか？</span>
+  <div class="input-scroll-area">
+    <div class="input-body">
+      <div class="card">
+        <div class="screen-title">📊 測定値入力</div>
+        <div id="input-alert" class="alert alert-error"></div>
+        <div class="meas-grid">
+          <!-- 行1: ひたい（額）-->
+          <div class="meas-item meas-item-full">
+            <span class="meas-label">ひたい（額） <span class="baseline" id="lbl-forehead"></span></span>
+            <input type="number" id="inp-forehead" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
+            <span class="meas-warn" id="warn-forehead">入力値はあっていますか？</span>
+          </div>
+          <!-- 行2: 首 -->
+          <div class="meas-item">
+            <span class="meas-label">首 右 <span class="baseline" id="lbl-neckR"></span></span>
+            <input type="number" id="inp-neckR" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
+            <span class="meas-warn" id="warn-neckR">入力値はあっていますか？</span>
+          </div>
+          <div class="meas-item">
+            <span class="meas-label">首 左 <span class="baseline" id="lbl-neckL"></span></span>
+            <input type="number" id="inp-neckL" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
+            <span class="meas-warn" id="warn-neckL">入力値はあっていますか？</span>
+          </div>
+          <!-- 行3: 甲 -->
+          <div class="meas-item">
+            <span class="meas-label">甲 右 <span class="baseline" id="lbl-handR"></span></span>
+            <input type="number" id="inp-handR" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
+            <span class="meas-warn" id="warn-handR">入力値はあっていますか？</span>
+          </div>
+          <div class="meas-item">
+            <span class="meas-label">甲 左 <span class="baseline" id="lbl-handL"></span></span>
+            <input type="number" id="inp-handL" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
+            <span class="meas-warn" id="warn-handL">入力値はあっていますか？</span>
+          </div>
+          <!-- 行4: 指 -->
+          <div class="meas-item">
+            <span class="meas-label">指 右 <span class="baseline" id="lbl-fingerR"></span></span>
+            <input type="number" id="inp-fingerR" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
+            <span class="meas-warn" id="warn-fingerR">入力値はあっていますか？</span>
+          </div>
+          <div class="meas-item">
+            <span class="meas-label">指 左 <span class="baseline" id="lbl-fingerL"></span></span>
+            <input type="number" id="inp-fingerL" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
+            <span class="meas-warn" id="warn-fingerL">入力値はあっていますか？</span>
+          </div>
+          <!-- 行5: 足なしチェック -->
+          <div class="no-foot-bar" onclick="toggleNoFoot()">
+            <input type="checkbox" id="no-foot-chk">
+            <label for="no-foot-chk">🦶 足なしモード（足の測定なし）</label>
+          </div>
+          <!-- 行6: 足 -->
+          <div class="meas-item" id="foot-r-item">
+            <span class="meas-label">足 右 <span class="baseline" id="lbl-footR"></span></span>
+            <input type="number" id="inp-footR" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
+            <span class="meas-warn" id="warn-footR">入力値はあっていますか？</span>
+          </div>
+          <div class="meas-item" id="foot-l-item">
+            <span class="meas-label">足 左 <span class="baseline" id="lbl-footL"></span></span>
+            <input type="number" id="inp-footL" class="meas-input" step="0.1" min="0" max="50" inputmode="decimal" placeholder="--.-">
+            <span class="meas-warn" id="warn-footL">入力値はあっていますか？</span>
+          </div>
         </div>
       </div>
     </div>
-    <div class="nav-buttons">
-      <button class="btn btn-outline" onclick="goBack()">← 戻る</button>
-      <button class="btn btn-primary" onclick="calculate()">計算して結果を見る →</button>
-    </div>
+  </div>
+  <div class="input-bottom-nav">
+    <button class="btn btn-outline" onclick="goBack()">← 戻る</button>
+    <button class="btn btn-primary" onclick="calculate()">計算して結果を見る →</button>
   </div>
 </div>
 
