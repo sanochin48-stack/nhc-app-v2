@@ -311,6 +311,8 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .final-comp-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 20px;border-top:1px solid #eee;display:flex;justify-content:center;}
 /* ===== 画面8: スコア&ランク ===== */
 #screen-score-rank{background:#fff;flex-direction:column;}
+#screen-score-rank .sr-body{opacity:0;transition:opacity 3s ease;}
+#screen-score-rank.sr-revealed .sr-body{opacity:1;}
 .sr-header{padding:20px 28px 16px;border-bottom:2px solid #e8f4fd;font-size:20px;font-weight:bold;color:#1a5276;flex-shrink:0;}
 .sr-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
 .sr-score-wrap{display:flex;align-items:baseline;gap:10px;}
@@ -438,7 +440,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   <div id="meas-check-body"></div>
   <div class="meas-check-nav">
     <button class="btn btn-outline" onclick="showScreen('screen-input')">← 戻る</button>
-    <button class="btn btn-primary" onclick="showScoreRank()">次へ →</button>
+    <button class="btn btn-primary" onclick="showScoreRank()">解析結果へ →</button>
   </div>
 </div>
 
@@ -1225,7 +1227,10 @@ function showScoreRank() {
   rankEl.textContent = result.rank + 'ランク';
   rankEl.className = 'sr-rank-box rank-' + result.rank;
   document.getElementById('sr-nofoot-note').style.display = state.withFoot ? 'none' : 'block';
+  const el = document.getElementById('screen-score-rank');
+  el.classList.remove('sr-revealed');
   showScreen('screen-score-rank');
+  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('sr-revealed')));
 }
 
 function renderMeasCheck(targetId) {
