@@ -1688,6 +1688,10 @@ function renderTotalResult(result) {
       </div>`;
   }
   document.getElementById('total-score-header').innerHTML = scoreHeaderHTML;
+  if (!state.withFoot) {
+    document.getElementById('total-score-header').innerHTML +=
+      `<span style="font-size:12px;color:#856404;background:#fff3cd;border:1px solid #f0ad4e;border-radius:8px;padding:4px 8px;margin-top:4px;text-align:center;">⚠️ 足なし<br>精度30%ダウン</span>`;
+  }
 
   // buildBodyDiagram を呼んで window._NHC_BODY_IMG キャッシュを確保してから描画
   buildBodyDiagram(result);
