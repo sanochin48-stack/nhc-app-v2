@@ -1689,7 +1689,8 @@ function renderTotalResult(result) {
   }
   document.getElementById('total-score-header').innerHTML = scoreHeaderHTML;
 
-  // Body diagram: 測定値一覧と同じレンダリングを流用
+  // buildBodyDiagram を呼んで window._NHC_BODY_IMG キャッシュを確保してから描画
+  buildBodyDiagram(result);
   renderMeasCheck('total-result-body');
 
   // Action buttons
