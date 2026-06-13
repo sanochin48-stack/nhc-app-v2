@@ -1647,7 +1647,7 @@ function renderMeasCheck(targetId) {
     const baseline = s.baselines[c.key];
     const diff = Math.round((val - baseline) * 10) / 10;
     const isFoot = c.key==='footR' || c.key==='footL';
-    const color = isSecond ? '#888' : (isFoot ? '#e03020' : diff < 0 ? '#4a90d9' : '#e8a020');
+    const color = isSecond ? '#f57c00' : (isFoot ? '#e03020' : diff < 0 ? '#4a90d9' : '#e8a020');
     const diffStr = (diff >= 0 ? '+' : '') + diff.toFixed(1) + '℃';
     const dot = DOTS[c.key];
     const bx = c.align==='right' ? c.lx-LW : c.lx;
