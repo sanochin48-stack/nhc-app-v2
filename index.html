@@ -1740,9 +1740,9 @@ function renderSession2Final() {
     const lineX = c.align==='right' ? bx+LW : bx;
     const v1Str = isNaN(val1) ? '--' : val1.toFixed(1)+'℃';
     return `
-      <circle cx="${dot[0]}" cy="${dot[1]}" r="7" fill="#999"/>
-      <line x1="${dot[0]}" y1="${dot[1]}" x2="${lineX}" y2="${c.ly}" stroke="#999" stroke-width="1.5"/>
-      <rect x="${bx}" y="${by}" width="${LW}" height="${LH}" rx="6" fill="#fff" stroke="#ccc" stroke-width="2"/>
+      <circle cx="${dot[0]}" cy="${dot[1]}" r="7" fill="#f57c00"/>
+      <line x1="${dot[0]}" y1="${dot[1]}" x2="${lineX}" y2="${c.ly}" stroke="#f57c00" stroke-width="1.5"/>
+      <rect x="${bx}" y="${by}" width="${LW}" height="${LH}" rx="6" fill="#fff" stroke="#f57c00" stroke-width="2"/>
       <text x="${cx}" y="${by+15}" text-anchor="middle" font-size="12" font-weight="600" fill="#555" font-family="sans-serif">${c.name}</text>
       <text x="${cx}" y="${by+37}" text-anchor="middle" font-size="14" fill="#888" font-family="sans-serif">${v1Str}</text>
       <text x="${cx}" y="${by+63}" text-anchor="middle" font-size="19" font-weight="bold" fill="#e03020" font-family="sans-serif">${val2.toFixed(1)}℃</text>`;
