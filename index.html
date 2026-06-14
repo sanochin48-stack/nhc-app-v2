@@ -1609,14 +1609,14 @@ function renderMeasCheck(targetId) {
   for (const k in RAW) DOTS[k] = [RAW[k][0]+DX, RAW[k][1]+DY];
 
   const configs = [
-    {key:'forehead',name:'ひたい（額）',lx:325, ly:50,  align:'right'},
-    {key:'neckR',   name:'首 右',       lx:280, ly:140, align:'right'},
+    {key:'forehead',name:'ひたい（額）',lx:325, ly:40,  align:'right'},
+    {key:'neckR',   name:'首 右',       lx:260, ly:140, align:'right'},
     {key:'neckL',   name:'首 左',       lx:560, ly:140, align:'left' },
-    {key:'handR',   name:'甲 右',       lx:135, ly:320, align:'right'},
-    {key:'handL',   name:'甲 左',       lx:705, ly:323, align:'left' },
+    {key:'handR',   name:'甲 右',       lx:135, ly:310, align:'right'},
+    {key:'handL',   name:'甲 左',       lx:705, ly:310, align:'left' },
     {key:'fingerR', name:'指 右',       lx:135, ly:400, align:'right'},
     {key:'fingerL', name:'指 左',       lx:705, ly:400, align:'left' },
-    {key:'footR',   name:'足 右',       lx:330, ly:620, align:'right'},
+    {key:'footR',   name:'足 右',       lx:320, ly:620, align:'right'},
     {key:'footL',   name:'足 左',       lx:510, ly:620, align:'left' },
   ];
 
@@ -1701,14 +1701,14 @@ function renderSession2Final() {
   const DOTS = {};
   for (const k in RAW) DOTS[k] = [RAW[k][0]+DX, RAW[k][1]+DY];
   const configs = [
-    {key:'forehead',name:'ひたい（額）',lx:325, ly:50,  align:'right'},
-    {key:'neckR',   name:'首 右',       lx:280, ly:140, align:'right'},
+    {key:'forehead',name:'ひたい（額）',lx:325, ly:40,  align:'right'},
+    {key:'neckR',   name:'首 右',       lx:260, ly:140, align:'right'},
     {key:'neckL',   name:'首 左',       lx:560, ly:140, align:'left' },
-    {key:'handR',   name:'甲 右',       lx:135, ly:320, align:'right'},
-    {key:'handL',   name:'甲 左',       lx:705, ly:323, align:'left' },
+    {key:'handR',   name:'甲 右',       lx:135, ly:310, align:'right'},
+    {key:'handL',   name:'甲 左',       lx:705, ly:310, align:'left' },
     {key:'fingerR', name:'指 右',       lx:135, ly:400, align:'right'},
     {key:'fingerL', name:'指 左',       lx:705, ly:400, align:'left' },
-    {key:'footR',   name:'足 右',       lx:330, ly:620, align:'right'},
+    {key:'footR',   name:'足 右',       lx:320, ly:620, align:'right'},
     {key:'footL',   name:'足 左',       lx:510, ly:620, align:'left' },
   ];
   const active = configs.filter(c => {
