@@ -337,9 +337,10 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 .mode-card-hero .mode-icon{font-size:56px;margin-bottom:14px;}
 .mode-card-hero h2{font-size:26px;color:#1a5276;}
 .mode-card-hero p{font-size:14px;color:#888;margin-top:6px;}
-.mode-card-mini{background:#f0f0f0;border-radius:16px;padding:20px 12px;text-align:center;flex:1;opacity:.5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;pointer-events:none;}
+.mode-card-mini{background:#fff;border-radius:16px;padding:20px 12px;text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 4px 24px rgba(0,0,0,.1);border:3px solid transparent;transition:all .2s;}
+.mode-card-mini:hover{border-color:#2980b9;transform:translateY(-4px);}
 .mode-card-mini .mode-icon-sm{font-size:28px;}
-.mode-card-mini span{font-size:11px;color:#666;line-height:1.4;}
+.mode-card-mini span{font-size:12px;color:#1a5276;font-weight:600;line-height:1.4;}
 .main-back-nav{position:fixed;bottom:0;left:0;right:0;padding:16px 24px;background:#fff;border-top:1px solid #eee;}
 /* ===== メディアクエリ ===== */
 @media(max-width:1023px){
@@ -390,6 +391,16 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 @keyframes s2f-arr{0%,100%{transform:translateX(0);}50%{transform:translateX(10px);}}
 .s2f-score2{font-size:44px;font-weight:bold;color:#e03020;line-height:1;}
 .s2f-nav{flex-shrink:0;padding:16px 24px;display:flex;justify-content:space-between;background:#fff;border-top:1px solid #ddd;}
+/* ===== DUAL FINAL SCREEN ===== */
+#screen-dual-final{flex-direction:column;background:#f5f6f8;height:100vh;height:100dvh;overflow:hidden;}
+.dualf-cols{flex:1;min-height:0;display:flex;gap:10px;padding:10px;}
+.dualf-col{flex:1;min-width:0;display:flex;flex-direction:column;background:#fff;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.08);overflow:hidden;}
+.dualf-head{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px 4px;}
+.dualf-name{font-size:15px;font-weight:600;color:#555;}
+.dualf-badge{display:flex;align-items:center;gap:8px;}
+.dualf-body{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:2px 4px;}
+.dualf-body svg{width:100%;height:100%;}
+.dualf-nav{flex-shrink:0;display:flex;justify-content:center;padding:12px 20px;background:#fff;border-top:1px solid #eee;}
 /* ===== 画面8: スコア&ランク ===== */
 #screen-score-rank{background:#fff;flex-direction:column;}
 #screen-score-rank .sr-body{opacity:0;transition:opacity 9s ease;}
@@ -707,7 +718,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
       <h2>１人モード</h2>
       <p>お客様1名の測定を行います</p>
     </div>
-    <div class="mode-card-mini">
+    <div class="mode-card-mini" onclick="startMode(2)">
       <div class="mode-icon-sm">👥</div>
       <span>2人同時<br>モード</span>
     </div>
@@ -979,6 +990,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
 
 <!-- ===== SCREEN: 2ND VISIT TITLE ===== -->
 <div id="screen-second-title" class="screen">
+  <div id="second-title-person" style="display:none;font-size:22px;color:#1a5276;font-weight:600;letter-spacing:2px;"></div>
   <div class="center-title-xl">2回目測定</div>
 </div>
 
@@ -1004,6 +1016,23 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
       <button class="btn btn-outline" onclick="showScoreRank()">← 戻る</button>
       <button class="btn btn-secondary" onclick="showScreen('screen-input')">再測定</button>
     </div>
+    <button class="btn btn-primary" id="s2f-next-btn" onclick="startOver()">最初へ</button>
+  </div>
+</div>
+
+<!-- ===== SCREEN: DUAL FINAL (2人同時モード 最終結果) ===== -->
+<div id="screen-dual-final" class="screen">
+  <div class="dualf-cols">
+    <div class="dualf-col">
+      <div class="dualf-head" id="dualf-head-0"></div>
+      <div class="dualf-body" id="dualf-body-0"></div>
+    </div>
+    <div class="dualf-col">
+      <div class="dualf-head" id="dualf-head-1"></div>
+      <div class="dualf-body" id="dualf-body-1"></div>
+    </div>
+  </div>
+  <div class="dualf-nav">
     <button class="btn btn-primary" onclick="startOver()">最初へ</button>
   </div>
 </div>
@@ -1114,17 +1143,6 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   </div>
 </div>
 
-<!-- ===== DIALOG: DUAL MODE RESULTS ===== -->
-<div class="dialog-overlay" id="dialog-dual-done">
-  <div class="dialog">
-    <h3>👥 2人同時モード完了</h3>
-    <div id="dual-summary"></div>
-    <div class="dialog-buttons">
-      <button class="btn btn-primary" onclick="closeDialog('dialog-dual-done');startOver();">終了してトップへ</button>
-    </div>
-  </div>
-</div>
-
 <script>
 'use strict';
 
@@ -1228,7 +1246,8 @@ const DEFAULT_SETTINGS = {
 let state = {
   mode: 1,            // 1 or 2 (dual)
   dualStep: 0,        // 0=person1, 1=person2 (dual mode)
-  dualResults: [],    // store both results for dual mode
+  persons: [],        // dual mode: per-person context & final snapshots
+  dualSecondIdx: 0,   // dual mode: whose 2nd visit is running (0 or 1)
   session: null,      // 1=first, 2=second+
   customerName: '',
   withFoot: true,
@@ -1685,12 +1704,26 @@ function showSession2Final() {
   document.getElementById('s2f-score2').textContent = `${result.rank} (${result.finalScore})`;
   renderSession2Final();
   document.getElementById('s2f-nofoot-note').style.display = state.withFoot ? 'none' : 'block';
+  const nbtn = document.getElementById('s2f-next-btn');
+  if (state.mode === 2 && state.dualSecondIdx === 0) {
+    nbtn.textContent = '２人目の２回目測定へ →';
+    nbtn.onclick = () => dualStartSecond(1);
+  } else if (state.mode === 2) {
+    nbtn.textContent = '最終結果へ →';
+    nbtn.onclick = showDualFinal;
+  } else {
+    nbtn.textContent = '最初へ';
+    nbtn.onclick = startOver;
+  }
   showScreen('screen-session2-final');
 }
 
 function renderSession2Final() {
-  const vals2 = state.vals;
   const vals1 = (state.firstMeasureData && state.firstMeasureData.vals) ? state.firstMeasureData.vals : {};
+  document.getElementById('s2f-body-wrap').innerHTML = buildS2FSvg(vals1, state.vals, state.withFoot);
+}
+
+function buildS2FSvg(vals1, vals2, withFoot) {
   const DX = 160, DY = 15;
   const RAW = {
     forehead:[239,37], neckR:[222,100], neckL:[268,100],
@@ -1712,11 +1745,11 @@ function renderSession2Final() {
     {key:'footL',   name:'足 左',       lx:510, ly:620, align:'left' },
   ];
   const active = configs.filter(c => {
-    if ((c.key==='footR'||c.key==='footL') && !state.withFoot) return false;
+    if ((c.key==='footR'||c.key==='footL') && !withFoot) return false;
     const v = vals2[c.key];
     return v !== undefined && v !== null && v !== '';
   });
-  const svgH = state.withFoot ? 695 : 580;
+  const svgH = withFoot ? 695 : 580;
   const LW = 118, LH = 78;
   const items = active.map(c => {
     const val2 = parseFloat(vals2[c.key]);
@@ -1737,8 +1770,7 @@ function renderSession2Final() {
       <text x="${cx}" y="${by+63}" text-anchor="middle" font-size="19" font-weight="bold" fill="#e03020" font-family="sans-serif">${val2.toFixed(1)}℃</text>`;
   }).join('');
   const imgSrc = window._NHC_BODY_IMG ? `data:image/png;base64,${window._NHC_BODY_IMG}` : '';
-  document.getElementById('s2f-body-wrap').innerHTML =
-    `<svg viewBox="0 0 840 ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+  return `<svg viewBox="0 0 840 ${svgH}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
       <image href="${imgSrc}" x="${DX}" y="${DY}" width="497" height="629"/>
       ${items}
     </svg>`;
@@ -1767,7 +1799,8 @@ function agreeAndStart() {
 function startMode(m) {
   state.mode = m;
   state.dualStep = 0;
-  state.dualResults = [];
+  state.persons = [];
+  state.dualSecondIdx = 0;
   state.saved = false;
   if (m === 2) {
     document.getElementById('dual-indicator').style.display = 'block';
@@ -2167,10 +2200,16 @@ function renderTotalResult(result) {
   // Action buttons
   if (state.session === 1) {
     autoSave();
+    let nextBtn = `<button class="btn btn-secondary" onclick="startSecondVisit()">２回目の測定へ →</button>`;
+    if (state.mode === 2) {
+      nextBtn = state.dualStep === 0
+        ? `<button class="btn btn-secondary" onclick="dualGoSecondPerson()">２人目の測定へ →</button>`
+        : `<button class="btn btn-secondary" onclick="dualStartSecond(0)">１人目の２回目測定へ →</button>`;
+    }
     document.getElementById('total-action-area').innerHTML = `
       <div class="nav-buttons" style="padding:0;">
         <button class="btn btn-outline" onclick="showScreen('screen-result-${state.withFoot ? 'foot' : 'finger'}')">← 戻る</button>
-        <button class="btn btn-secondary" onclick="startSecondVisit()">２回目の測定へ →</button>
+        ${nextBtn}
       </div>`;
   } else {
     autoSave();
@@ -2297,18 +2336,6 @@ function autoSave() {
   saveMeasurements(measurements);
   state.saved = true;
   state.savedRecord = savedRecord;
-
-  // 2人同時モード
-  if (state.mode === 2) {
-    state.dualResults.push({ customerName: state.customerName, totalScore: result.finalScore, rank: result.rank });
-    if (state.dualStep === 0) {
-      state.dualStep = 1;
-      state.saved = false;
-      setTimeout(() => startSecondPerson(), 1500);
-    } else {
-      setTimeout(() => showDualSummary(), 1500);
-    }
-  }
 }
 
 function startSecondVisit() {
@@ -2322,6 +2349,14 @@ function startSecondVisit() {
   };
   state.saved = false;
   state.savedRecord = null;
+  const personLbl = document.getElementById('second-title-person');
+  if (state.mode === 2) {
+    const nm = state.customerName ? `：${state.customerName} 様` : '';
+    personLbl.textContent = `${state.dualSecondIdx + 1}人目${nm}`;
+    personLbl.style.display = 'block';
+  } else {
+    personLbl.style.display = 'none';
+  }
   showScreen('screen-second-title');
   setTimeout(() => {
     setupInputScreen();
@@ -2329,8 +2364,15 @@ function startSecondVisit() {
   }, 1250);
 }
 
-
-function startSecondPerson() {
+// ============================================================
+// DUAL MODE (2人同時モード)
+// ============================================================
+function dualGoSecondPerson() {
+  // 1人目の1回目コンテキストを保存して2人目の入力へ
+  state.persons[0] = { name: state.customerName, record: state.savedRecord, withFoot: state.withFoot };
+  state.dualStep = 1;
+  state.saved = false;
+  state.savedRecord = null;
   document.getElementById('dual-indicator').style.display = 'block';
   document.getElementById('dual-indicator').textContent = '👥 2人同時モード：2人目の情報を入力してください';
   document.getElementById('customer-title').textContent = '👤 2人目：お客様情報';
@@ -2338,21 +2380,54 @@ function startSecondPerson() {
   showScreen('screen-customer');
 }
 
-function showDualSummary() {
-  const r = state.dualResults;
-  document.getElementById('dual-summary').innerHTML = r.map((d, i) => `
-    <div style="padding:12px 0;border-bottom:1px solid #eee;">
-      <strong>${i+1}人目</strong>：${d.customerName || '（名前なし）'}<br>
-      <span style="font-size:24px;font-weight:bold;color:#1a5276;">${d.totalScore}点</span>
-      <span style="margin-left:8px;font-size:16px;">${d.rank}ランク</span>
-    </div>
-  `).join('');
-  openDialog('dialog-dual-done');
+function dualStartSecond(idx) {
+  if (idx === 0) {
+    // 2人目の1回目終了 → 2人目のコンテキストを保存
+    state.persons[1] = { name: state.customerName, record: state.savedRecord, withFoot: state.withFoot };
+  } else {
+    // 1人目の2回目終了 → 最終結果スナップショットを保存
+    dualSaveFinal(0);
+  }
+  const p = state.persons[idx];
+  state.dualSecondIdx = idx;
+  state.customerName = p.name;
+  state.withFoot = p.withFoot;
+  state.savedRecord = p.record;
+  startSecondVisit();
+}
+
+function dualSaveFinal(idx) {
+  const r = state.calcResult;
+  const f = state.firstMeasureData;
+  state.persons[idx].final = {
+    rank1: f.rank, score1: f.totalScore,
+    rank2: r.rank, score2: r.finalScore,
+    vals1: { ...f.vals }, vals2: { ...state.vals },
+    withFoot: state.withFoot,
+  };
+}
+
+function showDualFinal() {
+  dualSaveFinal(1);
+  [0, 1].forEach(i => {
+    const p = state.persons[i];
+    const f = p.final;
+    const nameStr = p.name ? `${p.name} 様` : '';
+    document.getElementById('dualf-head-' + i).innerHTML = `
+      <div class="dualf-name">${i + 1}人目 ${nameStr}</div>
+      <div class="dualf-badge">
+        <span style="font-size:22px;font-weight:bold;line-height:1;color:${getRankColor(f.rank1)};">${f.rank1} (${f.score1})</span>
+        <span style="font-size:20px;color:#2980b9;">➡</span>
+        <span style="font-size:30px;font-weight:bold;line-height:1;color:#e03020;">${f.rank2} (${f.score2})</span>
+      </div>`;
+    document.getElementById('dualf-body-' + i).innerHTML = buildS2FSvg(f.vals1, f.vals2, f.withFoot);
+  });
+  showScreen('screen-dual-final');
 }
 
 function startOver() {
   state = {
-    mode: 1, dualStep: 0, dualResults: [],
+    mode: 1, dualStep: 0, persons: [], dualSecondIdx: 0,
     session: 1, customerName: '', withFoot: true,
     vals: {}, calcResult: null, firstMeasureId: null,
     firstMeasureData: null, prevScreen: null, saved: false,
