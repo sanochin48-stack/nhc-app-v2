@@ -620,6 +620,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
     </div>
   </div>
   <div class="intro-slide-nav">
+    <span id="app-version" style="margin-right:auto;font-size:13px;color:#999;"></span>
     <button class="btn-intro-next" onclick="showScreen('screen-intro2')">次へ</button>
   </div>
 </div>
@@ -1114,7 +1115,6 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
         <button class="btn btn-outline" onclick="showScreen('screen-main')">← 閉じる</button>
       </div>
       <div id="settings-alert" class="alert" style="margin-top:16px;"></div>
-      <div id="app-version" style="margin-top:20px;text-align:center;font-size:13px;color:#999;"></div>
     </div>
   </div>
 </div>
@@ -2516,14 +2516,6 @@ function renderSettingsScreen() {
   const measurements = getMeasurements();
   document.getElementById('data-count').textContent = measurements.length;
 
-  // バージョン表示（sw.jsのキャッシュ名から実際の稼働バージョンを取得）
-  fetch('./sw.js').then(r => r.text()).then(txt => {
-    const m = txt.match(/taion-app-v(\d+)/);
-    document.getElementById('app-version').textContent = m ? `バージョン: v${m[1]}` : '';
-  }).catch(() => {
-    document.getElementById('app-version').textContent = '';
-  });
-
   // Baselines
   const partLabels = {
     forehead:'ひたい（額）', neckR:'首 右', neckL:'首 左',
@@ -2747,6 +2739,11 @@ function init() {
   document.querySelectorAll('.meas-input').forEach(inp => {
     inp.addEventListener('focus', () => setTimeout(() => inp.select(), 0));
   });
+  // バージョン表示（sw.jsのキャッシュ名から実際の稼働バージョンを取得）
+  fetch('./sw.js').then(r => r.text()).then(txt => {
+    const m = txt.match(/taion-app-v(\d+)/);
+    document.getElementById('app-version').textContent = m ? `バージョン: v${m[1]}` : '';
+  }).catch(() => {});
 }
 
 init();
