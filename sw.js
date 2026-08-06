@@ -1,4 +1,4 @@
-const CACHE_NAME = 'taion-app-v72';
+const CACHE_NAME = 'taion-app-v73';
 const ASSETS = [
   './index.html',
   './manifest.json',
@@ -8,7 +8,15 @@ const ASSETS = [
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then(cache =>
+      // HTTPキャッシュをバイパスして常にネットワークから最新を取得
+      Promise.all(ASSETS.map(url =>
+        fetch(url, { cache: 'no-cache' }).then(res => {
+          if (res.ok) return cache.put(url, res);
+          throw new Error('fetch failed: ' + url);
+        })
+      ))
+    )
   );
   self.skipWaiting();
 });
