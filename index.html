@@ -1015,7 +1015,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   <div class="s2f-nav">
     <div style="display:flex;gap:10px;">
       <button class="btn btn-outline" onclick="showScoreRank()">← 戻る</button>
-      <button class="btn btn-secondary" onclick="showScreen('screen-input')">再測定</button>
+      <button class="btn btn-secondary" onclick="retakeSecondInput()">再測定</button>
     </div>
     <button class="btn btn-primary" id="s2f-next-btn" onclick="startOver()">最初へ</button>
   </div>
@@ -1519,6 +1519,11 @@ function goBack() {
   const cur = document.querySelector('.screen.active');
   if (!cur) return;
   const id = cur.id;
+  // 再測定から入力画面に来た場合は元の画面へ戻す
+  if (id === 'screen-input' && state.inputBackTo) {
+    showScreen(state.inputBackTo);
+    return;
+  }
   const map = {
     'screen-customer': 'screen-main',
     'screen-input': 'screen-customer',
@@ -1526,6 +1531,11 @@ function goBack() {
   };
   if (map[id]) showScreen(map[id]);
   else showScreen('screen-main');
+}
+
+function retakeSecondInput() {
+  state.inputBackTo = 'screen-session2-final';
+  showScreen('screen-input');
 }
 
 // ============================================================
@@ -1826,6 +1836,7 @@ function resetCustomerForm() {
 function proceedToMeasurement() {
   state.customerName = document.getElementById('customer-name').value.trim();
   state.session = 1;
+  state.inputBackTo = null;
   setupInputScreen();
   showScreen('screen-input');
 }
@@ -2294,6 +2305,7 @@ function retakeMeasurement() {
   }
   state.saved = false;
   state.savedRecord = null;
+  state.inputBackTo = null;
   setupInputScreen();
   showScreen('screen-input');
 }
@@ -2350,6 +2362,7 @@ function startSecondVisit() {
   };
   state.saved = false;
   state.savedRecord = null;
+  state.inputBackTo = null;
   const personLbl = document.getElementById('second-title-person');
   if (state.mode === 2) {
     const nm = state.customerName ? `：${state.customerName} 様` : '';
