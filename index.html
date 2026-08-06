@@ -1114,6 +1114,7 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
         <button class="btn btn-outline" onclick="showScreen('screen-main')">← 閉じる</button>
       </div>
       <div id="settings-alert" class="alert" style="margin-top:16px;"></div>
+      <div id="app-version" style="margin-top:20px;text-align:center;font-size:13px;color:#999;"></div>
     </div>
   </div>
 </div>
@@ -2514,6 +2515,14 @@ function renderSettingsScreen() {
   const s = getSettings();
   const measurements = getMeasurements();
   document.getElementById('data-count').textContent = measurements.length;
+
+  // バージョン表示（sw.jsのキャッシュ名から実際の稼働バージョンを取得）
+  fetch('./sw.js').then(r => r.text()).then(txt => {
+    const m = txt.match(/taion-app-v(\d+)/);
+    document.getElementById('app-version').textContent = m ? `バージョン: v${m[1]}` : '';
+  }).catch(() => {
+    document.getElementById('app-version').textContent = '';
+  });
 
   // Baselines
   const partLabels = {
