@@ -2734,6 +2734,10 @@ function init() {
     const lbl = document.getElementById('lbl-' + part);
     if (lbl) lbl.textContent = `(基準${s.baselines[part]}℃)`;
   }
+  // 測定値入力欄：フォーカス時に既存の数値を全選択（上書き入力しやすく）
+  document.querySelectorAll('.meas-input').forEach(inp => {
+    inp.addEventListener('focus', () => setTimeout(() => inp.select(), 0));
+  });
 }
 
 init();
