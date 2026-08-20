@@ -254,13 +254,15 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
   background:radial-gradient(ellipse 80% 80% at 50% 60%, #c8e8f8 0%, #a8d4ef 45%, #6aacde 100%);}
 .s1-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
 .s1-rings svg{width:min(70vh,70vw);height:min(70vh,70vw);opacity:0.9;}
-.s1-title{position:absolute;top:0;left:0;right:0;text-align:center;padding:clamp(12px,3vh,40px) 16px clamp(6px,1.5vh,20px);
+.s1-head{position:absolute;top:0;left:0;right:0;padding:clamp(12px,3vh,40px) 16px 0;
+  display:flex;flex-direction:column;align-items:center;gap:clamp(4px,1vh,14px);}
+.s1-title{text-align:center;line-height:1.05;
   font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;
   font-size:clamp(32px,7vw,96px);font-weight:900;letter-spacing:0.05em;
   background:linear-gradient(180deg,#e8f4ff 0%,#b8daf8 35%,#4a90c8 65%,#1a5a9a 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   filter:drop-shadow(0 2px 8px rgba(0,60,140,0.5)) drop-shadow(0 0 20px rgba(0,100,200,0.3));}
-.s1-sub{position:absolute;top:clamp(54px,13vh,120px);left:0;right:0;text-align:center;
+.s1-sub{text-align:center;
   font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;
   font-size:clamp(12px,1.8vw,22px);color:rgba(40,100,180,0.8);letter-spacing:0.25em;}
 .s1-ui-l{position:absolute;left:clamp(10px,4vw,60px);top:50%;transform:translateY(-30%);
@@ -600,8 +602,10 @@ body{font-family:'Hiragino Sans','Meiryo','Yu Gothic',sans-serif;background:#f0f
         </svg>
       </div>
       <!-- タイトル -->
-      <div class="s1-title">放射熱量AI解析</div>
-      <div class="s1-sub">体表面温度測定・スコア解析システム</div>
+      <div class="s1-head">
+        <div class="s1-title">放射熱量AI解析</div>
+        <div class="s1-sub">体表面温度測定・スコア解析システム</div>
+      </div>
       <!-- UIパーツ左 -->
       <div class="s1-ui-l">
         ──────────────<br>
